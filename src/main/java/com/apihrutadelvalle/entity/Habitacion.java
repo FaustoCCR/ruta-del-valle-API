@@ -9,15 +9,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "habitaciones")
+@Table(name = "habitaciones",uniqueConstraints = {@UniqueConstraint(columnNames = {"num_habitacion"})})
 public class Habitacion {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_habitacion;
 	
+	@Column(name="num_habitacion",nullable = false)
 	private int num_habitacion;
 	
 	/*atributo imagen*/

@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-
 public class TipoHabitacionDTO implements Serializable{
 	
 	/**

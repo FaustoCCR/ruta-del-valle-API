@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.validation.constraints.NotEmpty;
 import com.apihrutadelvalle.entity.Habitacion;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 public class PlantaDTO implements Serializable{
 	
@@ -19,6 +20,7 @@ public class PlantaDTO implements Serializable{
 	@NotEmpty(message = "Ingrese un nombre a la planta")
 	private String nombre;
 	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
 	private Set<Habitacion> habitaciones = new HashSet<>();
 
 	public Long getId_planta() {
@@ -36,7 +38,7 @@ public class PlantaDTO implements Serializable{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
+	
 	public Set<Habitacion> getHabitaciones() {
 		return habitaciones;
 	}
