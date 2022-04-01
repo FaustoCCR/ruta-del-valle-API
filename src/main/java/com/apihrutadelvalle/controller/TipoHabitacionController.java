@@ -56,10 +56,10 @@ public class TipoHabitacionController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> eliminarTipoHb(@PathVariable long id){
+	public ResponseEntity<Void> eliminarTipoHb(@PathVariable long id){
 		
 		tipoHabitacionService.eliminarTipo(id);
-		return new ResponseEntity<>("Tipo de Habitación eliminada",HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	
