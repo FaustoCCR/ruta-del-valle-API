@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,18 +42,23 @@ public class PlantaController {
 		
 	}
 	
+	/*PreAuthorize
+	 * asigna acceso a los métodos de acuerdo al Rol*/
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<PlantaDTO> guardarPlanta(@Valid @RequestBody PlantaDTO plantaDTO){
 		
 		return new ResponseEntity<>(plantaService.crearPlanta(plantaDTO),HttpStatus.CREATED);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public ResponseEntity<PlantaDTO> actualizarPlanta(@Valid @RequestBody PlantaDTO plantaDTO,@PathVariable long id){
 		
 		return new ResponseEntity<>(plantaService.actualizarPlanta(plantaDTO, id),HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> eliminarPlanta(@PathVariable long id){
 		

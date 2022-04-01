@@ -40,7 +40,7 @@ public class Usuario {
 	private String password;
 	private boolean estado;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_rol",nullable = false)/*Nombre de la Foreign Key*/
 	private Rol rol;
 

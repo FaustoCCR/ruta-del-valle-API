@@ -1,6 +1,9 @@
 package com.apihrutadelvalle.security.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +13,11 @@ public class UsuarioPrincipal implements UserDetails{
 	/*Clase encargada de la seguridad
 	 * Identifica los privilegios*/
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String dni;
 	
 	private String nombre;
@@ -24,11 +32,23 @@ public class UsuarioPrincipal implements UserDetails{
 	
 	private boolean estado;
 	
-	private GrantedAuthority authorities;
-	
+	//private GrantedAuthority authorities;
+	private Collection<? extends GrantedAuthority> authorities;
 
-	public UsuarioPrincipal(String dni, String nombre, String email, String telefono, String username, String password,
+	/*public UsuarioPrincipal(String dni, String nombre, String email, String telefono, String username, String password,
 			boolean estado, GrantedAuthority authorities) {
+		super();
+		this.dni = dni;
+		this.nombre = nombre;
+		this.email = email;
+		this.telefono = telefono;
+		this.username = username;
+		this.password = password;
+		this.estado = estado;
+		this.authorities = authorities;
+	}*/
+	public UsuarioPrincipal(String dni, String nombre, String email, String telefono, String username, String password,
+			boolean estado, Collection<? extends GrantedAuthority> authorities) {
 		super();
 		this.dni = dni;
 		this.nombre = nombre;
@@ -41,12 +61,19 @@ public class UsuarioPrincipal implements UserDetails{
 	}
 
 	/*Asignamos los privilegios*/
-	public static UsuarioPrincipal build(Usuario usuario) {
+	/*public static UsuarioPrincipal build(Usuario usuario) {
 		GrantedAuthority authorities = new SimpleGrantedAuthority(usuario.getRol().getNombre().name());
 		
 		
 		return new UsuarioPrincipal(usuario.getDni(), usuario.getNombre(), usuario.getEmail(), usuario.getTelefono(), usuario.getUsername(), usuario.getPassword(), usuario.isEstado(), authorities);
 				
+	}*/
+	public static UsuarioPrincipal build(Usuario usuario) {
+		
+		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		authorities.add(new SimpleGrantedAuthority(usuario.getRol().getNombre().name()));
+		
+		return new UsuarioPrincipal(usuario.getDni(), usuario.getNombre(), usuario.getEmail(), usuario.getTelefono(), usuario.getUsername(), usuario.getPassword(), usuario.isEstado(), authorities);		
 	}
 
 	@Override

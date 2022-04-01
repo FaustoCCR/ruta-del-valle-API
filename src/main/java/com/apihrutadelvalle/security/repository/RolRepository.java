@@ -9,7 +9,7 @@ import com.apihrutadelvalle.security.enums.RolNombre;
 
 public interface RolRepository extends JpaRepository<Rol, Long>{
 	
-	Optional<Rol> findByRolNombre(RolNombre rolNombre);
-	
+	//Optional<Rol> findByNameRol(RolNombre rolNombre);
+	public Optional<Rol> findByNombre(RolNombre nombre);
 
 }
