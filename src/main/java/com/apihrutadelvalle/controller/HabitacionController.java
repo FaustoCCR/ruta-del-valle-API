@@ -30,18 +30,21 @@ public class HabitacionController {
 	@Autowired
 	private HabitacionService habitacionService;
 	
+	//listar
 	@GetMapping
 	public ResponseEntity<List<HabitacionDetalleDTO>> listarHabitaciones(){
 		
 		return ResponseEntity.ok(habitacionService.obtenerHabitaciones());
 	}
 	
+	//ver por id
 	@GetMapping("/{id_habitacion}")
 	public ResponseEntity<HabitacionDetalleDTO> obtenerHabitacioId(@PathVariable long id_habitacion){
 		
 		return ResponseEntity.ok(habitacionService.obtenerHabitacionId(id_habitacion));
 	}
 	
+	//crear 
 	@PostMapping()
 	public ResponseEntity<HabitacionDTO> guardarHabitacion(@RequestParam(value = "id_planta") long id_planta,
 			@RequestParam(value = "id_tipo") long id_tipo,
@@ -52,7 +55,7 @@ public class HabitacionController {
 		return new ResponseEntity<>(habitacionDTO,HttpStatus.CREATED);
 		
 	}
-	
+	//editar
 	@PutMapping("/{id_habitacion}")
 	public ResponseEntity<HabitacionDTO> actualizarHabitacion(@PathVariable long id_habitacion,@RequestParam(value = "id_planta") long id_planta,
 			@RequestParam(value = "id_tipo") long id_tipo,
