@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apihrutadelvalle.dto.TipoHabitacionDTO;
 import com.apihrutadelvalle.service.TipoHabitacionService;
 
+@CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/api/tiposhb")
 /*Cross Origin --> Angular*/
@@ -54,10 +56,10 @@ public class TipoHabitacionController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> eliminarTipoHb(@PathVariable long id){
+	public ResponseEntity<Void> eliminarTipoHb(@PathVariable long id){
 		
 		tipoHabitacionService.eliminarTipo(id);
-		return new ResponseEntity<>("Tipo de Habitación eliminada",HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	

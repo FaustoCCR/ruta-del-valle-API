@@ -64,6 +64,7 @@ public class HabitacionServiceImpl implements HabitacionService{
 		return habitacionMap;
 	}
 	
+	/*-------- METODOS DE CONSULTA -------*/
 
 	@Override
 	@Transactional(readOnly = true)

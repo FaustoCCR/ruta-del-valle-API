@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import com.apihrutadelvalle.dto.HabitacionDTO;
 import com.apihrutadelvalle.dto.HabitacionDetalleDTO;
 import com.apihrutadelvalle.service.HabitacionService;
 
+@CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/api/habitaciones")
 public class HabitacionController {
@@ -28,18 +30,21 @@ public class HabitacionController {
 	@Autowired
 	private HabitacionService habitacionService;
 	
+	//listar
 	@GetMapping
 	public ResponseEntity<List<HabitacionDetalleDTO>> listarHabitaciones(){
 		
 		return ResponseEntity.ok(habitacionService.obtenerHabitaciones());
 	}
 	
+	//ver por id
 	@GetMapping("/{id_habitacion}")
 	public ResponseEntity<HabitacionDetalleDTO> obtenerHabitacioId(@PathVariable long id_habitacion){
 		
 		return ResponseEntity.ok(habitacionService.obtenerHabitacionId(id_habitacion));
 	}
 	
+	//crear 
 	@PostMapping()
 	public ResponseEntity<HabitacionDTO> guardarHabitacion(@RequestParam(value = "id_planta") long id_planta,
 			@RequestParam(value = "id_tipo") long id_tipo,
@@ -50,7 +55,7 @@ public class HabitacionController {
 		return new ResponseEntity<>(habitacionDTO,HttpStatus.CREATED);
 		
 	}
-	
+	//editar
 	@PutMapping("/{id_habitacion}")
 	public ResponseEntity<HabitacionDTO> actualizarHabitacion(@PathVariable long id_habitacion,@RequestParam(value = "id_planta") long id_planta,
 			@RequestParam(value = "id_tipo") long id_tipo,

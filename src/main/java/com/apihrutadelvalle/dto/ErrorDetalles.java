@@ -2,6 +2,8 @@ package com.apihrutadelvalle.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 public class ErrorDetalles {
 	private Date marcaDeTiempo;
 	private String mensaje;
