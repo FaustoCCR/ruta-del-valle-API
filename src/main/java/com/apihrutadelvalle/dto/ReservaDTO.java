@@ -7,10 +7,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.apihrutadelvalle.entity.Habitacion;
-/*import com.apihrutadelvalle.entity.Usuario;*/
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 public class ReservaDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;/*identificar unico por clase*/
