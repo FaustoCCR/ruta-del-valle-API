@@ -34,9 +34,10 @@ public class ReservaDTO implements Serializable {
 	@Min(0)
 	private double costo_alojamiento;
 	
-	private Date fecha_ingreso;
 	@NotNull
+	private Date fecha_ingreso;
 	private Date fecha_reserva;
+	@NotNull
 	private Date fecha_salida;
 	
 	
