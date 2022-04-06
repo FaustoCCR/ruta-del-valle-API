@@ -18,8 +18,8 @@ public class Reserva {
 	@JoinColumn(name="id_habitacion")
 	private long id_habitacion;
 	
-	@Column(name="fecha_reserva",nullable = false)
-	private Date fecha_reserva;
+	@Column(name="fecha_ingreso",nullable = false)
+	private Date fecha_ingreso;
 
 	@Column(name="fecha_salida",nullable = false)
 	private Date fecha_salida;
@@ -39,14 +39,15 @@ public class Reserva {
 	@Column(name="esatado",nullable = false)
 	private String estado;
 
-	@Column(name="fecha_ingreso")
+	//cuando el cliente desea ir
+	@Column(name="fecha_reserva")
 	@Temporal(TemporalType.DATE)
-	private Date fecha_ingreso;
+	private Date fecha_reserva;
 	
 	@PrePersist 
 	public void prePersist() {
 		//para adicionar la fecha de creacion
-		fecha_ingreso=new Date();
+		fecha_reserva=new Date();
 	}
 	
 	/*GETTERS Y SETTERS*/

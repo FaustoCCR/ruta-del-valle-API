@@ -35,13 +35,15 @@ public class ReservaController {
 	public ResponseEntity<List<ReservaDTO> > listarReserva(){
 		return ResponseEntity.ok(reservaService.mostrarReserva());
 	}
-	/*
-	//por ID
+	
+	//por ID de reserva
 	@GetMapping("/{id_reserva}")
+	
 	public ResponseEntity<ReservaDTO> obtenerReservaID(@PathVariable long id_reserva){
 		return ResponseEntity.ok(reservaService.obtenerReservaID(id_reserva));
+		
 	}
-	*/
+	
 	
 	//crear
 	@PostMapping
