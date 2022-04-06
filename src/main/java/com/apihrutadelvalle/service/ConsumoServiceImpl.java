@@ -5,14 +5,16 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.apihrutadelvalle.dto.ConsumoDTO;
 import com.apihrutadelvalle.entity.Consumo;
+import com.apihrutadelvalle.entity.Reserva;
 import com.apihrutadelvalle.exception.ResourceNotFoundException;
 import com.apihrutadelvalle.repository.ConsumoRepository;
 import com.apihrutadelvalle.repository.ReservaRepository;
-
+@Service
 public class ConsumoServiceImpl implements ConsumoService{
 	
 	@Autowired
@@ -25,10 +27,10 @@ public class ConsumoServiceImpl implements ConsumoService{
 	private ReservaRepository reservaRepository;
 	
 	//Convertimos de entidad a DTO
-	private ConsumoDTO maptoDTO (Consumo consumo) {
+	private ConsumoDTO mapToDTOdetalle (Consumo consumo) {
 		ConsumoDTO consumoDTO= new ConsumoDTO();
 		consumoDTO.setId_consumo(consumo.getId_consumo());
-		consumoDTO.setId_reserva(consumo.getId_reserva());
+		consumoDTO.setId_reserva(consumo.getReserva().getId_reserva());
 		consumoDTO.setFecha(consumo.getFecha());
 		
 		return consumoDTO;
@@ -56,22 +58,23 @@ public class ConsumoServiceImpl implements ConsumoService{
 	@Transactional(readOnly = true)
 	public ConsumoDTO obtenerConsumoID(Long id) {
 		Consumo consumos= consumoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Consumo", "id", id));
-		return maptoDTO(consumos);
+		return mapToDTOdetalle(consumos);
 	}
 	
 	@Override
 	@Transactional
 	public ConsumoDTO crearConsumo(ConsumoDTO consumoDTO, Long id_reserva) {
-		Consumo consumo=consumoRepository.findById(id_reserva).orElseThrow(() -> new ResourceNotFoundException("Consumo", "id", id_reserva));
+		Reserva reserva=reservaRepository.findById(id_reserva).orElseThrow(() -> new ResourceNotFoundException("Reserva", "id", id_reserva));
 		
 		//recibe lo que ingresamos al json para guardarlo en la BD
 		Consumo consumos = mapToEntity(consumoDTO, new Consumo());
+		consumos.setReserva(reserva);
 		
 		//guardamos
-		Consumo consumon= consumoRepository.save(consumo);
+		Consumo consumon= consumoRepository.save(consumos);
 		
 		//retornamos en pantalla el nuevo registro
-		return mapToDTO(consumon);
+		return mapToDTOdetalle(consumon);
 	}
 	
 	@Override

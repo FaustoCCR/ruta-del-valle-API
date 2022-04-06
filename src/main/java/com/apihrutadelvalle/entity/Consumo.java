@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,9 +18,9 @@ public class Consumo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_consumo;
 	
-	@ManyToOne
-    @JoinColumn(name = "FK_id_reserva", nullable = false, updatable = false)
-	private long id_reserva;
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_reserva", nullable = false)
+	private Reserva reserva;
 	
 	@Column(name="fecha",nullable = false)
 	private Date fecha;
@@ -32,14 +33,6 @@ public class Consumo {
 		this.id_consumo = id_consumo;
 	}
 
-	public long getId_reserva() {
-		return id_reserva;
-	}
-
-	public void setId_reserva(long id_reserva) {
-		this.id_reserva = id_reserva;
-	}
-
 	public Date getFecha() {
 		return fecha;
 	}
@@ -47,5 +40,14 @@ public class Consumo {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+
+	public Reserva getReserva() {
+		return reserva;
+	}
+
+	public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
+	}
+	
 	
 }
