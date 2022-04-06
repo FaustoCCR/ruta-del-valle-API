@@ -39,6 +39,7 @@ public class Reserva {
 	@Column(name="esatado",nullable = false)
 	private String estado;
 
+	//cuando el cliente desea ir
 	@Column(name="fecha_reserva")
 	@Temporal(TemporalType.DATE)
 	private Date fecha_reserva;
