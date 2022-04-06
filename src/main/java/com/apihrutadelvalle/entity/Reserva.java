@@ -1,12 +1,6 @@
 package com.apihrutadelvalle.entity;
 import java.util.Date;
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "reserva",uniqueConstraints = {@UniqueConstraint(columnNames = {"id_reserva","id_usuario"})})
