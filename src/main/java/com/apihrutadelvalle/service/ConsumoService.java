@@ -8,11 +8,11 @@ public interface ConsumoService {
 
 	public List<ConsumoDTO> mostrarConsumo();
 	
-	public ConsumoDTO obtenerConsumoID (Long id);
+	public ConsumoDTO obtenerConsumoID (long id);
 	
-	public ConsumoDTO crearConsumo(ConsumoDTO consumoDTO, Long id_reserva);
+	public ConsumoDTO crearConsumo(ConsumoDTO consumoDTO, long id_reserva);
 	
-	public ConsumoDTO actualizarConsumo(ConsumoDTO consumoDTO, long id_reserva);
+	public ConsumoDTO actualizarConsumo(ConsumoDTO consumoDTO, long id_consumo, long id_reserva);
 	
-	public void eliminarConsumo (Long id);
+	public void eliminarConsumo (long id_consumo);
 }

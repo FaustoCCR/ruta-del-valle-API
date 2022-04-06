@@ -3,13 +3,17 @@ package com.apihrutadelvalle.dto;
 import java.io.Serializable;
 import java.sql.Date;
 
+import com.apihrutadelvalle.entity.Reserva;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 public class ConsumoDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	private long id_consumo;
 	
-	private long id_reserva;
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+	private Reserva reserva;
 	
 	private Date fecha;
 
@@ -21,14 +25,13 @@ public class ConsumoDTO implements Serializable{
 		this.id_consumo = id_consumo;
 	}
 
-	public long getId_reserva() {
-		return id_reserva;
+	public Reserva getReserva() {
+		return reserva;
 	}
 
-	public void setId_reserva(long id_reserva) {
-		this.id_reserva = id_reserva;
+	public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
 	}
-	
 
 	public Date getFecha() {
 		return fecha;
@@ -41,7 +44,6 @@ public class ConsumoDTO implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
 
+	
 }
