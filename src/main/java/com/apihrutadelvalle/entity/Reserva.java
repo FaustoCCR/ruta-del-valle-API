@@ -18,11 +18,10 @@ public class Reserva {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_reserva;
 	
-	@JoinColumn(name="id_usuario",nullable = false)
+	@JoinColumn(name="id_usuario")
 	private long id_usuario;
 	
-	//@ManyToOne(fetch = FetchType.LAZY)/*relacion muchos a uno*/
-	@JoinColumn(name="id_habitacion",nullable = false)
+	@JoinColumn(name="id_habitacion")
 	private long id_habitacion;
 	
 	@Column(name="fecha_reserva",nullable = false)
@@ -30,7 +29,6 @@ public class Reserva {
 
 	@Column(name="fecha_salida",nullable = false)
 	private Date fecha_salida;
-	
 	
 	@Column(name="adultos",nullable = false)
 	private int adultos;
@@ -47,8 +45,8 @@ public class Reserva {
 	@Column(name="esatado",nullable = false)
 	private String estado;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_ingreso")
+	@Temporal(TemporalType.DATE)
 	private Date fecha_ingreso;
 	
 	@PrePersist 

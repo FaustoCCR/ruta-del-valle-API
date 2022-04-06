@@ -15,6 +15,8 @@ import com.apihrutadelvalle.entity.Reserva;
 import com.apihrutadelvalle.exception.ResourceNotFoundException;
 import com.apihrutadelvalle.repository.HabitacionRepository;
 import com.apihrutadelvalle.repository.ReservaRepository;
+import com.apihrutadelvalle.security.entity.Usuario;
+import com.apihrutadelvalle.security.repository.UsuarioRepository;
 
 @Service
 public class ReservaServiceImpl implements ReservaService {
@@ -27,7 +29,10 @@ public class ReservaServiceImpl implements ReservaService {
 	
 	@Autowired
 	private HabitacionRepository habitacionRepository;
-	/*falta usuario*/
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
 	
 	
 	//Convertimos de entidad a DTO
@@ -67,7 +72,6 @@ public class ReservaServiceImpl implements ReservaService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<ReservaDTO> mostrarReserva(){
-		
 		List<Reserva> res = reservaRepository.findAll();
 		return res.stream().map(reser -> mapToDTO(reser)).collect(Collectors.toList());
 	}
@@ -87,16 +91,16 @@ public class ReservaServiceImpl implements ReservaService {
 	@Override
 	@Transactional
 	public ReservaDTO crearReserva(ReservaDTO resDTO, long id_usu, long id_hab) {
-		
 		Habitacion habitacion = habitacionRepository.findById(id_hab)
 				.orElseThrow(() -> new ResourceNotFoundException("Habitacion", "id", id_hab));
-		/*
-		Usuario usuario = usuarioRepository.findById(id_usuario)
-				.orElseThrow(() -> new ResourceNotFoundException("Usuario", "id", id_usuario));
-		*/
+		
+		Usuario usuario = usuarioRepository.findById(id_usu)
+				.orElseThrow(() -> new ResourceNotFoundException("Usuario", "id", id_usu));
+		
 		//recibe del json y guarda en l abd
 		Reserva reservas = mapToEntity(resDTO, new Reserva());
 		reservas.setId_habitacion(habitacion.getId_habitacion());
+		reservas.setId_usuario(usuario.getId_usuario());
 		
 		//guardamos
 		Reserva nueva = reservaRepository.save(reservas);
@@ -113,20 +117,19 @@ public class ReservaServiceImpl implements ReservaService {
 		// extraemos lo que vamos a editar
 		Habitacion habitacion = habitacionRepository.findById(id_habitacion)
 				.orElseThrow(() -> new ResourceNotFoundException("Habitacion", "id", id_habitacion));
-		/*
-		Usuario ususario = UsuarioRepository.findById(id_usuario)
+		
+		Usuario usuario = usuarioRepository.findById(id_usuario)
 				.orElseThrow(() -> new ResourceNotFoundException("Usuario", "id", id_usuario));
-		*/
+		
 		Reserva reservas = reservaRepository.findById(id_reserva)
 				.orElseThrow(() -> new ResourceNotFoundException("Reserva", "id", id_reserva));
 		
 		reservas.setId_habitacion(habitacion.getId_habitacion());
+		reservas.setId_usuario(usuario.getId_usuario());
 		reservas.setAdultos(resDTO.getAdultos());
 		reservas.setNinos(resDTO.getNinos());
 		reservas.setFecha_reserva(resDTO.getFecha_reserva());
 		reservas.setFecha_salida(resDTO.getFecha_salida());
-		reservas.setCosto_alojamiento(resDTO.getCosto_alojamiento());
-		reservas.setEstado(resDTO.getEstado());
 		
 		//añadimos los cambios
 		Reserva reservasguar = mapToEntity(resDTO, reservas);
