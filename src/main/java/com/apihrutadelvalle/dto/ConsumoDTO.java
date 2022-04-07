@@ -25,14 +25,6 @@ public class ConsumoDTO implements Serializable{
 		this.id_consumo = id_consumo;
 	}
 
-	public Reserva getReserva() {
-		return reserva;
-	}
-
-	public void setReserva(Reserva reserva) {
-		this.reserva = reserva;
-	}
-
 	public Date getFecha() {
 		return fecha;
 	}
@@ -43,6 +35,14 @@ public class ConsumoDTO implements Serializable{
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Reserva getReserva() {
+		return reserva;
+	}
+
+	public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
 	}
 
 	

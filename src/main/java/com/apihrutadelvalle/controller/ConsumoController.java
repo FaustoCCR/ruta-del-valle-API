@@ -47,10 +47,10 @@ public class ConsumoController {
 		return new ResponseEntity <> (consuDTO, HttpStatus.CREATED);
 	}
 	
-	//Metodo para editar
+	//Metodo para editar , @RequestParam(value = "id_reserva")long id_reserva
 	@PutMapping("/{id_consumo}")
-	public ResponseEntity<ConsumoDTO> actualizarConsumo(@Valid @RequestBody ConsumoDTO consumoDTO, @RequestParam(value = "id_consumo") long id_consumo, @RequestParam(value = "id_reserva")long id_reserva){
-		ConsumoDTO consumDTO= consumoService.actualizarConsumo(consumoDTO,id_consumo, id_reserva);
+	public ResponseEntity<ConsumoDTO> actualizarConsumo(@Valid @RequestBody ConsumoDTO consumoDTO, @RequestParam(value = "id_consumo") long id_consumo){
+		ConsumoDTO consumDTO= consumoService.actualizarConsumo(consumoDTO,id_consumo);
 		return new ResponseEntity<>(consumDTO, HttpStatus.OK);
 	}
 	

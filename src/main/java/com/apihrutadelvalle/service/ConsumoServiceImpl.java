@@ -79,13 +79,13 @@ public class ConsumoServiceImpl implements ConsumoService{
 	
 	@Override
 	@Transactional
-	public ConsumoDTO actualizarConsumo(ConsumoDTO consumoDTO,long id_consumo, long id_reserva) {
+	public ConsumoDTO actualizarConsumo(ConsumoDTO consumoDTO,long id_consumo) {
 		
 		Consumo consumo = consumoRepository.findById(id_consumo).orElseThrow(() -> new ResourceNotFoundException("Consumo", "id", id_consumo));
-		Reserva reserva=reservaRepository.findById(id_reserva).orElseThrow(() -> new ResourceNotFoundException("Reserva", "id", id_reserva));
+		//Reserva reserva=reservaRepository.findById(id_reserva).orElseThrow(() -> new ResourceNotFoundException("Reserva", "id", id_reserva));
 		
 		//Obtenemos los datos
-		consumo.setReserva(reserva);
+		//consumo.setReserva(reserva);
 		consumo.setFecha(consumoDTO.getFecha());
 		
 		//agregamos los nuevos datos
