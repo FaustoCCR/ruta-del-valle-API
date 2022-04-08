@@ -30,7 +30,7 @@ public class ConsumoServiceImpl implements ConsumoService{
 	private ConsumoDTO mapToDTOdetalle (Consumo consumo) {
 		ConsumoDTO consumoDTO= new ConsumoDTO();
 		consumoDTO.setId_consumo(consumo.getId_consumo());
-		consumoDTO.setReserva(consumo.getReserva());
+		consumoDTO.setId_reserva(consumo.getReserva().getId_reserva());
 		consumoDTO.setFecha(consumo.getFecha());
 		
 		return consumoDTO;
@@ -51,7 +51,7 @@ public class ConsumoServiceImpl implements ConsumoService{
 	@Transactional(readOnly = true)
 	public List<ConsumoDTO> mostrarConsumo(){
 		List<Consumo> consumo= consumoRepository.findAll();
-		return consumo.stream().map(consumos -> mapToDTO(consumos)).collect(Collectors.toList());
+		return consumo.stream().map(consumos -> mapToDTOdetalle(consumos)).collect(Collectors.toList());
 	}
 	
 	@Override
@@ -79,23 +79,23 @@ public class ConsumoServiceImpl implements ConsumoService{
 	
 	@Override
 	@Transactional
-	public ConsumoDTO actualizarConsumo(ConsumoDTO consumoDTO,long id_consumo) {
+	public ConsumoDTO actualizarConsumo(ConsumoDTO consumoDTO,long id_consumo, long id_reserva) {
 		
 		Consumo consumo = consumoRepository.findById(id_consumo).orElseThrow(() -> new ResourceNotFoundException("Consumo", "id", id_consumo));
-		//Reserva reserva=reservaRepository.findById(id_reserva).orElseThrow(() -> new ResourceNotFoundException("Reserva", "id", id_reserva));
+		Reserva reserva=reservaRepository.findById(id_reserva).orElseThrow(() -> new ResourceNotFoundException("Reserva", "id", id_reserva));
 		
 		//Obtenemos los datos
-		//consumo.setReserva(reserva);
+		consumo.setReserva(reserva);
 		consumo.setFecha(consumoDTO.getFecha());
 		
 		//agregamos los nuevos datos
-		Consumo consumoa = mapToEntity(consumoDTO, consumo);
+		//Consumo consumoa = mapToEntity(consumoDTO, consumo);
 		
 		//actualizamos los datos
-		Consumo consumoActualizado = consumoRepository.save(consumoa);
+		Consumo consumoActualizado = consumoRepository.save(consumo);
 		
 		//mostramos en pantalla
-		return mapToDTO(consumoActualizado);
+		return mapToDTOdetalle(consumoActualizado);
 	}
 	
 	@Override

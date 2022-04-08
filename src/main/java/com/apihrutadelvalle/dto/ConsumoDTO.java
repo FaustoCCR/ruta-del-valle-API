@@ -12,8 +12,8 @@ public class ConsumoDTO implements Serializable{
 	
 	private long id_consumo;
 	
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
-	private Reserva reserva;
+	
+	private long id_reserva;
 	
 	private Date fecha;
 
@@ -37,13 +37,13 @@ public class ConsumoDTO implements Serializable{
 		return serialVersionUID;
 	}
 
-	public Reserva getReserva() {
-		return reserva;
+	public long getId_reserva() {
+		return id_reserva;
 	}
 
-	public void setReserva(Reserva reserva) {
-		this.reserva = reserva;
+	public void setId_reserva(long id_reserva) {
+		this.id_reserva = id_reserva;
 	}
-
+	
 	
 }
