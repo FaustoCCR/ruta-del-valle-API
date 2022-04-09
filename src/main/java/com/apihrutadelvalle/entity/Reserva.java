@@ -19,9 +19,11 @@ public class Reserva {
 	private long id_habitacion;
 	
 	@Column(name="fecha_ingreso",nullable = false)
+	@Temporal(TemporalType.DATE)
 	private Date fecha_ingreso;
 
 	@Column(name="fecha_salida",nullable = false)
+	@Temporal(TemporalType.DATE)
 	private Date fecha_salida;
 	
 	@Column(name="adultos",nullable = false)
