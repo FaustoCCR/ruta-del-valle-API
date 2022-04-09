@@ -51,19 +51,19 @@ public class ConsumoServiceImpl implements ConsumoService{
 	@Transactional(readOnly = true)
 	public List<ConsumoDTO> mostrarConsumo(){
 		List<Consumo> consumo= consumoRepository.findAll();
-		return consumo.stream().map(consumos -> mapToDTO(consumos)).collect(Collectors.toList());
+		return consumo.stream().map(consumos -> mapToDTOdetalle(consumos)).collect(Collectors.toList());
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public ConsumoDTO obtenerConsumoID(Long id) {
+	public ConsumoDTO obtenerConsumoID(long id) {
 		Consumo consumos= consumoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Consumo", "id", id));
 		return mapToDTOdetalle(consumos);
 	}
 	
 	@Override
 	@Transactional
-	public ConsumoDTO crearConsumo(ConsumoDTO consumoDTO, Long id_reserva) {
+	public ConsumoDTO crearConsumo(ConsumoDTO consumoDTO, long id_reserva) {
 		Reserva reserva=reservaRepository.findById(id_reserva).orElseThrow(() -> new ResourceNotFoundException("Reserva", "id", id_reserva));
 		
 		//recibe lo que ingresamos al json para guardarlo en la BD
@@ -79,25 +79,30 @@ public class ConsumoServiceImpl implements ConsumoService{
 	
 	@Override
 	@Transactional
-	public ConsumoDTO actualizarConsumo(ConsumoDTO consumoDTO, long id_reserva) {
+	public ConsumoDTO actualizarConsumo(ConsumoDTO consumoDTO,long id_consumo, long id_reserva) {
+		
+		Consumo consumo = consumoRepository.findById(id_consumo).orElseThrow(() -> new ResourceNotFoundException("Consumo", "id", id_consumo));
+		Reserva reserva=reservaRepository.findById(id_reserva).orElseThrow(() -> new ResourceNotFoundException("Reserva", "id", id_reserva));
 		
 		//Obtenemos los datos
-		Consumo consumo = consumoRepository.findById(id_reserva).orElseThrow(() -> new ResourceNotFoundException("Consumo", "id", id_reserva));
+		consumo.setReserva(reserva);
+		consumo.setFecha(consumoDTO.getFecha());
 		
 		//agregamos los nuevos datos
-		Consumo consumoa = mapToEntity(consumoDTO, consumo);
+		//Consumo consumoa = mapToEntity(consumoDTO, consumo);
 		
 		//actualizamos los datos
-		Consumo consumoActualizado = consumoRepository.save(consumoa);
+		Consumo consumoActualizado = consumoRepository.save(consumo);
 		
 		//mostramos en pantalla
-		return mapToDTO(consumoActualizado);
+		return mapToDTOdetalle(consumoActualizado);
 	}
 	
 	@Override
-	public void eliminarConsumo (Long id) {
+	@Transactional
+	public void eliminarConsumo (long id_consumo) {
 		//Obtenemos los registros a eliminar
-		Consumo consumo = consumoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Consumo", "id", id));
+		Consumo consumo = consumoRepository.findById(id_consumo).orElseThrow(() -> new ResourceNotFoundException("Consumo", "id", id_consumo));
 		consumoRepository.delete(consumo);
 	}
 }
