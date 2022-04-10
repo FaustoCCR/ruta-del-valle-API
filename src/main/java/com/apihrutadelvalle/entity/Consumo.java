@@ -1,6 +1,8 @@
 package com.apihrutadelvalle.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "consumo")
 public class Consumo {
 	
 	@Id
@@ -24,7 +29,15 @@ public class Consumo {
 	
 	@Column(name="fecha",nullable = false)
 	private Date fecha;
-
+	
+	
+	/*
+	 * Enlace con la tabla intermediaria
+	 * */
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "consumo")
+	private List<DetalleConsumo> listaDetalle = new ArrayList<>();
+	
+	
 	public long getId_consumo() {
 		return id_consumo;
 	}
@@ -48,6 +61,18 @@ public class Consumo {
 	public void setReserva(Reserva reserva) {
 		this.reserva = reserva;
 	}
+
+	public List<DetalleConsumo> getListaDetalle() {
+		return listaDetalle;
+	}
+
+	public void setListaDetalle(List<DetalleConsumo> listaDetalle) {
+		this.listaDetalle = listaDetalle;
+	}
+	
+	
+	
+	
 	
 	
 }

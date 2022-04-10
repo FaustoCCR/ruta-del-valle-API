@@ -49,15 +49,15 @@ public class ConsumoController {
 	
 	//Metodo para editar
 	@PutMapping("/{id_consumo}")
-	public ResponseEntity<ConsumoDTO> actualizarConsumo(@Valid @RequestBody ConsumoDTO consumoDTO, @RequestParam(value = "id_consumo") long id_consumo , @RequestParam(value = "id_reserva")long id_reserva){
+	public ResponseEntity<ConsumoDTO> actualizarConsumo(@Valid @RequestBody ConsumoDTO consumoDTO, @PathVariable long id_consumo , @RequestParam(value = "id_reserva")long id_reserva){
 		ConsumoDTO consumDTO= consumoService.actualizarConsumo(consumoDTO,id_consumo, id_reserva);
 		return new ResponseEntity<>(consumDTO, HttpStatus.OK);
 	}
 	
 	//Metodo para eliminar
 	@DeleteMapping("/{id_consumo}")
-	public ResponseEntity<String> eliminarConsumo (@PathVariable long id_consumo){
+	public ResponseEntity<Void> eliminarConsumo (@PathVariable long id_consumo){
 		consumoService.eliminarConsumo(id_consumo);
-		return new ResponseEntity<String>("Consumo eliminado correctamente",HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
