@@ -2,6 +2,8 @@ package com.apihrutadelvalle.entity;
 import java.util.Date;
 import javax.persistence.*;
 
+import com.apihrutadelvalle.security.entity.Usuario;
+
 @Entity
 @Table(name = "reserva",uniqueConstraints = {@UniqueConstraint(columnNames = {"id_reserva","id_usuario"})})
 
@@ -12,12 +14,13 @@ public class Reserva {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_reserva;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_usuario",nullable = false)
-	private long id_usuario;
+	private Usuario usuario;
 	
-	//@ManyToOne(fetch = FetchType.LAZY)/*relacion muchos a uno*/
+	@OneToOne(fetch = FetchType.LAZY)/*relacion muchos a uno*/
 	@JoinColumn(name="id_habitacion",nullable = false)
-	private long id_habitacion;
+	private Habitacion habitacion;
 	
 	@Column(name="fecha_reserva",nullable = false)
 	private Date fecha_reserva;
@@ -67,20 +70,22 @@ public class Reserva {
 		this.id_reserva = id_reserva;
 	}
 
-	public long getId_usuario() {
-		return id_usuario;
+	
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setId_usuario(long id_usuario) {
-		this.id_usuario = id_usuario;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
-	public long getId_habitacion() {
-		return id_habitacion;
+
+	public Habitacion getHabitacion() {
+		return habitacion;
 	}
 
-	public void setId_habitacion(long habitacion) {
-		this.id_habitacion = habitacion;
+	public void setHabitacion(Habitacion habitacion) {
+		this.habitacion = habitacion;
 	}
 
 	public Date getFecha_ingreso() {

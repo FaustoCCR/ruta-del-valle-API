@@ -16,7 +16,7 @@ public class ReservaDTO implements Serializable {
 	private long  id_habitacion;
 	
 	@NotEmpty
-	@Size(min = 0,max = 100, message = "La observacion es demasiado grande")
+	@Size(min = 0,max = 100, message = "La observacion debe tener de 0 a 100 caracteres")
 	private String observaciones;
 	
 	@NotEmpty
@@ -34,7 +34,7 @@ public class ReservaDTO implements Serializable {
 	
 	@NotNull
 	private Date fecha_ingreso;
-	@NotNull
+	
 	private Date fecha_reserva;
 	@NotNull
 	private Date fecha_salida;

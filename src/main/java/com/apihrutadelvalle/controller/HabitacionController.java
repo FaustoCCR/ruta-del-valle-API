@@ -68,11 +68,19 @@ public class HabitacionController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> eliminarHabitacion(@PathVariable long id){
+	public ResponseEntity<Void> eliminarHabitacion(@PathVariable long id){
 		
 		habitacionService.eliminarHabitacion(id);
-		return new ResponseEntity<String>("Habitación eliminada",HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@GetMapping("/num_habitacion/{num}")
+	public ResponseEntity<HabitacionDetalleDTO> obtenerHabitacionPorNumero(@PathVariable int num){
+		
+		HabitacionDetalleDTO habitacionDetalleDTO = habitacionService.obtenerHabitacionPorNumero(num);
+		return new ResponseEntity<>(habitacionDetalleDTO,HttpStatus.OK);
+	}
+	
 	
 
 }

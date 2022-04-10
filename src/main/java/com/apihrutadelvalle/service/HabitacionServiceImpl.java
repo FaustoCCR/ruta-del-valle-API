@@ -41,6 +41,9 @@ public class HabitacionServiceImpl implements HabitacionService{
 		haDto.setNum_habitacion(habitacion.getNum_habitacion());
 		haDto.setPlanta(habitacion.getPlanta().getNombre());
 		haDto.setTipo_habitacion(habitacion.getTipo_Habitacion().getNombre());
+		haDto.setDescripcion(habitacion.getTipo_Habitacion().getDescripcion());
+		haDto.setMax_adultos(habitacion.getTipo_Habitacion().getMax_adultos());
+		haDto.setMax_ninos(habitacion.getTipo_Habitacion().getMax_ninos());
 		haDto.setEstado(habitacion.getEstado());
 		haDto.setCosto_noche(habitacion.getCosto_noche());
 		
@@ -150,6 +153,18 @@ public class HabitacionServiceImpl implements HabitacionService{
 				.orElseThrow(() -> new ResourceNotFoundException("Habitacion", "id", id_habitacion));
 		
 		habitacionRepository.delete(habitacion);
+	}
+
+
+
+	@Override
+	@Transactional
+	public HabitacionDetalleDTO obtenerHabitacionPorNumero(int num) {
+		
+		Habitacion habitacion = habitacionRepository.findByNumHabitacion(num)
+				.orElseThrow(() -> new ResourceNotFoundException("Habitacion", "número", num));
+		
+		return mapToDTODetalles(habitacion);
 	}
 	
 

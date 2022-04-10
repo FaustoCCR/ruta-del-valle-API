@@ -66,7 +66,8 @@ public class MainSecurity extends WebSecurityConfigurerAdapter{
 		//  /auth/** ruta para login y registro
 		http.cors().and().csrf().disable()
 		.authorizeRequests()
-		.antMatchers("/auth/**").permitAll()
+		.antMatchers("**").permitAll()
+		//.antMatchers("/auth/**").permitAll()
 		.anyRequest().authenticated()
 		.and().exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
 		.and()

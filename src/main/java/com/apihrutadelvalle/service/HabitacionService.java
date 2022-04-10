@@ -16,4 +16,6 @@ public interface HabitacionService {
 	public HabitacionDTO actualizarHabitacion(long id_planta, long id_tipo, long id_habitacion, HabitacionDTO haDto);
 	
 	public void eliminarHabitacion(long id_habitacion);
+	
+	public HabitacionDetalleDTO obtenerHabitacionPorNumero(int num);
 }

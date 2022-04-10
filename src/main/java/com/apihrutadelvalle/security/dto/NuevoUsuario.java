@@ -2,12 +2,14 @@ package com.apihrutadelvalle.security.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class NuevoUsuario {
 	
 	//clase para la creación o registro de un nuevo usuario
 	
 	@NotNull
+	@Size(max = 10,message = "Cédula debe tener solo 10 caracteres")
 	private String dni;
 	
 	@NotNull

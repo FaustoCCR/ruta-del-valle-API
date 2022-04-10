@@ -54,10 +54,10 @@ public class ProductoController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> eliminarProductoHb(@PathVariable long id){
+	public ResponseEntity<Void> eliminarProductoHb(@PathVariable long id){
 		
 		productoService.eliminarProducto(id);
-		return new ResponseEntity<>("Producto eliminado",HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	

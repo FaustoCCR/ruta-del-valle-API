@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apihrutadelvalle.dto.ReservaDTO;
+import com.apihrutadelvalle.dto.ReservaDetalleDTO;
 import com.apihrutadelvalle.service.ReservaService;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
@@ -57,10 +59,17 @@ public class ReservaController {
 	}
 
 	//eliminar
-	@GetMapping("/{id_reserva}")
-	public ResponseEntity<String> elikminarReserva(@PathVariable long id){
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> elikminarReserva(@PathVariable long id){
 		reservaService.eliminarReseva(id);
-		return new ResponseEntity<String>("Reserva eliminada",HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@GetMapping("/detalle/{num}")
+	public ResponseEntity<ReservaDetalleDTO> mostrarDetalles(@PathVariable int num){
+		
+		ReservaDetalleDTO reserva = reservaService.mostrarDetalleReservaporHabitacion(num);
+		return ResponseEntity.ok(reserva);
 	}
 	
 	

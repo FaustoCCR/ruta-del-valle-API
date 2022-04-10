@@ -75,9 +75,9 @@ public class UserInformationImpl implements UserInformationService{
 				.orElseThrow(()-> new ResourceNotFoundException("Usuario", "", id_user));
 		
 		user.setDni(userInformation.getDni());
-		user.setNombre(user.getNombre());
+		user.setNombre(userInformation.getNombre());
 		user.setEmail(userInformation.getEmail());
-		user.setTelefono(user.getTelefono());
+		user.setTelefono(userInformation.getTelefono());
 		user.setUsername(userInformation.getUsername());
 		user.setPassword(passwordEncoder.encode(userInformation.getPassword()));
 		user.setEstado(userInformation.isEstado());
@@ -107,6 +107,32 @@ public class UserInformationImpl implements UserInformationService{
 				.orElseThrow(()-> new ResourceNotFoundException("Usuario", "", id_user));
 		
 		usuarioRepository.delete(user);
+	}
+
+	@Override
+	@Transactional
+	public UserInformation findByUsername(String username) {
+		Usuario usuario = usuarioRepository.findByUsername(username).get();
+		
+		return mapToDTOInformation(usuario);
+	}
+
+	@Override
+	public boolean existsByUsername(String username) {
+		
+		return usuarioRepository.existsByUsername(username);
+	}
+
+	@Override
+	public boolean existsByEmail(String email) {
+		return usuarioRepository.existsByEmail(email);
+	}
+
+	@Override
+	@Transactional
+	public boolean existsByDni(String dni) {
+		
+		return usuarioRepository.existsByDni(dni);
 	}
 
 }

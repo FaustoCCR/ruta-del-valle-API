@@ -20,6 +20,7 @@ public class Usuario {
 	private long id_usuario;
 	
 	@NotNull
+	@Column(unique = true)
 	private String dni;
 	
 	@NotNull

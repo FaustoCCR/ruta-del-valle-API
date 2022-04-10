@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.apihrutadelvalle.security.dto.JwtDto;
 import com.apihrutadelvalle.security.dto.LoginUsuario;
+import com.apihrutadelvalle.security.dto.Mensaje;
 import com.apihrutadelvalle.security.dto.NuevoUsuario;
 import com.apihrutadelvalle.security.entity.Rol;
 import com.apihrutadelvalle.security.entity.Usuario;
@@ -55,18 +56,21 @@ public class AuthController {
 		
 		if (bindingResult.hasErrors()) 
 			
-			return new ResponseEntity<String>("Campos inválidos",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Mensaje("Campos inválidos"),HttpStatus.BAD_REQUEST);
+		
+		if (usuarioService.existsByDni(nuevoUsuario.getDni())) 
+			return new ResponseEntity<>(new Mensaje("Cédula ya registrada"),HttpStatus.BAD_REQUEST);
 		
 		if (usuarioService.existsByUsername(nuevoUsuario.getUsername())) 
-			return new ResponseEntity<String>("Username ya existe",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Mensaje("Username ya existe"),HttpStatus.BAD_REQUEST);
 			
 		if (usuarioService.existsByEmail(nuevoUsuario.getEmail())) 
-			return new ResponseEntity<String>("Email ya existe",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Mensaje("Email ya existe"),HttpStatus.BAD_REQUEST);
 		
 		Usuario usuario = new Usuario(
 				nuevoUsuario.getDni(),nuevoUsuario.getNombre(),nuevoUsuario.getEmail(),
 				nuevoUsuario.getTelefono(),nuevoUsuario.getUsername(),
-				passwordEncoder.encode(nuevoUsuario.getPassword()),nuevoUsuario.isEstado());//colocar true al crear
+				passwordEncoder.encode(nuevoUsuario.getPassword()),true);//colocar true al crear
 		
 		Rol rol = new Rol();
 		rol = rolService.findByRolNombre(RolNombre.ROLE_USER).get();
@@ -76,7 +80,7 @@ public class AuthController {
 		usuario.setRol(rol);
 		usuarioService.save(usuario);
 		
-		return new ResponseEntity<String>("Usuario guardado",HttpStatus.CREATED);
+		return new ResponseEntity<>(new Mensaje("Usuario guardado"),HttpStatus.CREATED);
 		
 	}
 	

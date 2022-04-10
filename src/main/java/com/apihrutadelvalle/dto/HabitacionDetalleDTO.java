@@ -17,6 +17,12 @@ public class HabitacionDetalleDTO implements Serializable{
 	
 	private String tipo_habitacion;
 	
+	private String descripcion;
+	
+	private int max_adultos;
+	
+	private int max_ninos;
+	
 	/*fotografía*/
 	
 	private String estado;
@@ -55,6 +61,30 @@ public class HabitacionDetalleDTO implements Serializable{
 		this.tipo_habitacion = tipo_habitacion;
 	}
 
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public int getMax_adultos() {
+		return max_adultos;
+	}
+
+	public void setMax_adultos(int max_adultos) {
+		this.max_adultos = max_adultos;
+	}
+
+	public int getMax_ninos() {
+		return max_ninos;
+	}
+
+	public void setMax_ninos(int max_ninos) {
+		this.max_ninos = max_ninos;
+	}
+
 	public String getEstado() {
 		return estado;
 	}
@@ -70,6 +100,8 @@ public class HabitacionDetalleDTO implements Serializable{
 	public void setCosto_noche(double costo_noche) {
 		this.costo_noche = costo_noche;
 	}
+	
+	
 
 	public HabitacionDetalleDTO() {
 		super();
