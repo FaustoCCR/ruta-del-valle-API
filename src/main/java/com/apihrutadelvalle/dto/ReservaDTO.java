@@ -12,7 +12,9 @@ public class ReservaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;/*identificar unico por clase*/
 
 	private long id_reserva;
+	@NotNull
 	private long id_usuario;
+	@NotNull
 	private long  id_habitacion;
 	
 	@NotEmpty
@@ -34,7 +36,7 @@ public class ReservaDTO implements Serializable {
 	
 	@NotNull
 	private Date fecha_ingreso;
-	
+
 	private Date fecha_reserva;
 	@NotNull
 	private Date fecha_salida;

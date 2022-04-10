@@ -1,6 +1,7 @@
 package com.apihrutadelvalle.dto;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class ConsumoDTO implements Serializable{
 	
@@ -8,13 +9,10 @@ public class ConsumoDTO implements Serializable{
 	
 	private long id_consumo;
 	
+	
 	private long id_reserva;
 	
-	private long id_producto;
-	
-	private int cantidad;
-	
-	private double precio_total;
+	private Date fecha;
 
 	public long getId_consumo() {
 		return id_consumo;
@@ -24,6 +22,18 @@ public class ConsumoDTO implements Serializable{
 		this.id_consumo = id_consumo;
 	}
 
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public long getId_reserva() {
 		return id_reserva;
 	}
@@ -31,35 +41,6 @@ public class ConsumoDTO implements Serializable{
 	public void setId_reserva(long id_reserva) {
 		this.id_reserva = id_reserva;
 	}
-
-	public long getId_producto() {
-		return id_producto;
-	}
-
-	public void setId_producto(long id_producto) {
-		this.id_producto = id_producto;
-	}
-
-	public int getCantidad() {
-		return cantidad;
-	}
-
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
-
-	public double getPrecio_total() {
-		return precio_total;
-	}
-
-	public void setPrecio_total(double precio_total) {
-		this.precio_total = precio_total;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 	
 	
-
 }

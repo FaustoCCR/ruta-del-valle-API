@@ -18,16 +18,17 @@ public class Reserva {
 	@JoinColumn(name="id_usuario",nullable = false)
 	private Usuario usuario;
 	
-	@OneToOne(fetch = FetchType.LAZY)/*relacion muchos a uno*/
+	@OneToOne(fetch = FetchType.LAZY)/*relacion uno a uno*/
 	@JoinColumn(name="id_habitacion",nullable = false)
 	private Habitacion habitacion;
 	
-	@Column(name="fecha_reserva",nullable = false)
-	private Date fecha_reserva;
+	@Column(name="fecha_ingreso",nullable = false)
+	@Temporal(TemporalType.DATE)
+	private Date fecha_ingreso;
 
 	@Column(name="fecha_salida",nullable = false)
+	@Temporal(TemporalType.DATE)
 	private Date fecha_salida;
-	
 	
 	@Column(name="adultos",nullable = false)
 	private int adultos;
@@ -44,14 +45,15 @@ public class Reserva {
 	@Column(name="esatado",nullable = false)
 	private String estado;
 
+	//cuando el cliente desea ir
+	@Column(name="fecha_reserva")
 	@Temporal(TemporalType.DATE)
-	@Column(name="fecha_ingreso")
-	private Date fecha_ingreso;
+	private Date fecha_reserva;
 	
 	@PrePersist 
 	public void prePersist() {
 		//para adicionar la fecha de creacion
-		fecha_ingreso=new Date();
+		fecha_reserva=new Date();
 	}
 	
 	/*GETTERS Y SETTERS*/

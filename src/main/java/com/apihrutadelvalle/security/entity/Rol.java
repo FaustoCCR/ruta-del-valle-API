@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import com.apihrutadelvalle.security.enums.RolNombre;
 
 @Entity
-@Table(name = "Roles")
+@Table(name = "roles")
 public class Rol {
 	
 	@Id

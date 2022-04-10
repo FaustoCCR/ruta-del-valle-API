@@ -32,8 +32,7 @@ public class ReservaServiceImpl implements ReservaService {
 	private ReservaRepository reservaRepository;
 	
 	@Autowired
-	private HabitacionRepository habitacionRepository;
-	
+	private HabitacionRepository habitacionRepository;	
 	
 	//Convertimos de entidad a DTO
 	private ReservaDTO mapToDTO(Reserva reserva){
@@ -96,7 +95,6 @@ public class ReservaServiceImpl implements ReservaService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<ReservaDTO> mostrarReserva(){
-		
 		List<Reserva> res = reservaRepository.findAll();
 		return res.stream().map(reser -> mapToDTO(reser)).collect(Collectors.toList());
 	}
@@ -146,20 +144,19 @@ public class ReservaServiceImpl implements ReservaService {
 		Habitacion habitacion = habitacionRepository.findById(id_habitacion)
 				.orElseThrow(() -> new ResourceNotFoundException("Habitacion", "id", id_habitacion));
 		
-		Usuario ususario = usuarioRepository.findById(id_usuario)
+
+		Usuario usuario = usuarioRepository.findById(id_usuario)
 				.orElseThrow(() -> new ResourceNotFoundException("Usuario", "id", id_usuario));
 		
 		Reserva reservas = reservaRepository.findById(id_reserva)
 				.orElseThrow(() -> new ResourceNotFoundException("Reserva", "id", id_reserva));
 		
-		reservas.setUsuario(ususario);
+		reservas.setUsuario(usuario);
 		reservas.setHabitacion(habitacion);
 		reservas.setAdultos(resDTO.getAdultos());
 		reservas.setNinos(resDTO.getNinos());
 		reservas.setFecha_reserva(resDTO.getFecha_reserva());
 		reservas.setFecha_salida(resDTO.getFecha_salida());
-		reservas.setCosto_alojamiento(resDTO.getCosto_alojamiento());
-		reservas.setEstado(resDTO.getEstado());
 		
 		//añadimos los cambios
 		Reserva reservasguar = mapToEntity(resDTO, reservas);
