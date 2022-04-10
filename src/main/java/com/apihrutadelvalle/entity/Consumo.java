@@ -1,9 +1,10 @@
 package com.apihrutadelvalle.entity;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +14,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "consumo")
@@ -27,14 +33,16 @@ public class Consumo {
     @JoinColumn(name = "id_reserva", nullable = false)
 	private Reserva reserva;
 	
-	@Column(name="fecha",nullable = false)
+	@Column(name="fecha")
+	@Temporal(TemporalType.DATE)
 	private Date fecha;
 	
 	
 	/*
 	 * Enlace con la tabla intermediaria
 	 * */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "consumo")
+	@JsonBackReference
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "consumo", cascade = CascadeType.ALL)
 	private List<DetalleConsumo> listaDetalle = new ArrayList<>();
 	
 	
@@ -44,6 +52,12 @@ public class Consumo {
 
 	public void setId_consumo(long id_consumo) {
 		this.id_consumo = id_consumo;
+	}
+	
+	@PrePersist 
+	public void prePersist() {
+		//para adicionar la fecha de creacion
+		fecha=new Date();
 	}
 
 	public Date getFecha() {

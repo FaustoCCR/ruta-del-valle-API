@@ -6,7 +6,7 @@ import com.apihrutadelvalle.dto.DetalleConsumoDTO;
 
 public interface DetalleConsumoService {
 	
-	public DetalleConsumoDTO crearDetalleConsumo(long id_consumo,DetalleConsumoDTO detalleConsumoDTO);
+	public Object crearDetalleConsumo(long id_consumo,DetalleConsumoDTO detalleConsumoDTO);
 	
 	public List<DetalleConsumoDTO> listaDetallesConsumo();
 	

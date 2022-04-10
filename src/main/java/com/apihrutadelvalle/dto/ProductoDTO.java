@@ -23,8 +23,9 @@ public class ProductoDTO implements Serializable{
 	private String descripcion;
 	
 	@Min(0)
-	private double precio_venta;
-
+	private double precio_venta;public ProductoDTO() {
+		// TODO Auto-generated constructor stub
+	}
 	@Min(0)
 	private int stock;
 

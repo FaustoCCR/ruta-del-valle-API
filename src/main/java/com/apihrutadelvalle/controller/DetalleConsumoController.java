@@ -34,9 +34,9 @@ public class DetalleConsumoController {
 	}
 	
 	@PostMapping("/{id_consumo}")
-	public ResponseEntity<DetalleConsumoDTO> guardarDetalleConsumo(@PathVariable long id_consumo,@Valid @RequestBody DetalleConsumoDTO detalleConsumoDTO){
+	public ResponseEntity<?> guardarDetalleConsumo(@PathVariable long id_consumo,@Valid @RequestBody DetalleConsumoDTO detalleConsumoDTO){
 		
-		DetalleConsumoDTO detalle = detalleConsumoService.crearDetalleConsumo(id_consumo,detalleConsumoDTO);
+		Object detalle = detalleConsumoService.crearDetalleConsumo(id_consumo,detalleConsumoDTO);
 		return new ResponseEntity<>(detalle,HttpStatus.CREATED);
 		
 	}

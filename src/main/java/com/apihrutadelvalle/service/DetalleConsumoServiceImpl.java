@@ -3,7 +3,6 @@ package com.apihrutadelvalle.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +15,7 @@ import com.apihrutadelvalle.exception.ResourceNotFoundException;
 import com.apihrutadelvalle.repository.ConsumoRepository;
 import com.apihrutadelvalle.repository.DetalleConsumoRepository;
 import com.apihrutadelvalle.repository.ProductoRepository;
+import com.apihrutadelvalle.security.dto.Mensaje;
 
 @Service
 public class DetalleConsumoServiceImpl implements DetalleConsumoService{
@@ -23,8 +23,8 @@ public class DetalleConsumoServiceImpl implements DetalleConsumoService{
 	@Autowired
 	private DetalleConsumoRepository detalleConsumoRepository;
 	
-	@Autowired
-	private ModelMapper modelMapper;
+	/*@Autowired
+	private ModelMapper modelMapper;*/
 	
 	@Autowired
 	private ConsumoRepository consumoRepository;
@@ -45,15 +45,15 @@ public class DetalleConsumoServiceImpl implements DetalleConsumoService{
 		return detalle;
 	}
 	
-	private DetalleConsumo mapToEntity(DetalleConsumoDTO detalleConsumoDTO, DetalleConsumo detalle) {
+	/*private DetalleConsumo mapToEntity(DetalleConsumoDTO detalleConsumoDTO, DetalleConsumo detalle) {
 		DetalleConsumo detalleConsumo = modelMapper.map(detalleConsumoDTO, detalle.getClass());
 		
 		return detalleConsumo;
-	}
+	}*/
 
 	@Override
 	@Transactional
-	public DetalleConsumoDTO crearDetalleConsumo(long id_consumo,DetalleConsumoDTO detalleConsumoDTO) {
+	public Object crearDetalleConsumo(long id_consumo,DetalleConsumoDTO detalleConsumoDTO) {
 		
 		DetalleConsumo detalleConsumo = new DetalleConsumo();
 		
@@ -61,17 +61,29 @@ public class DetalleConsumoServiceImpl implements DetalleConsumoService{
 				.orElseThrow(() -> new ResourceNotFoundException("Consumo", "id", id_consumo));
 		Producto producto = productoRepository.findByNombre(detalleConsumoDTO.getProducto()).orElseThrow(() -> new ResourceNotFoundException("Producto", "nombre", detalleConsumoDTO.getProducto()));
 		
-		
-		
-		detalleConsumo.setConsumo(consumo);
-		detalleConsumo.setProducto(producto);
-		detalleConsumo.setCantidad(detalleConsumoDTO.getCantidad());
-		detalleConsumo.setPrecio_total(detalleConsumoDTO.getCantidad() * producto.getPrecio_venta());
-		
-		DetalleConsumo nuevo = detalleConsumoRepository.save(detalleConsumo);
-		
-		return mapTODTO(nuevo);
-
+		int stock = producto.getStock();
+		if (stock>0) {
+			
+			detalleConsumo.setConsumo(consumo);
+			detalleConsumo.setProducto(producto);
+			detalleConsumo.setCantidad(detalleConsumoDTO.getCantidad());
+			detalleConsumo.setPrecio_total(detalleConsumoDTO.getCantidad() * producto.getPrecio_venta());
+			
+			DetalleConsumo nuevo = detalleConsumoRepository.save(detalleConsumo);
+			
+			/*
+			 * */
+			
+			int stockFinal = stock-detalleConsumo.getCantidad();
+			
+			producto.setStock(stockFinal);
+			productoRepository.save(producto);
+				
+			return mapTODTO(nuevo);
+			
+		}else {
+			return new Mensaje("Stock acabado del producto");
+		}
 		
 	}
 
