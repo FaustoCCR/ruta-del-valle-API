@@ -13,9 +13,9 @@ public class ResourceNotFoundException extends RuntimeException{
 	
 	private String nombreDelRecurso;
 	private String nombreDelCampo;
-	private long valorDelCampo;
+	private Object valorDelCampo;
 	
-	public ResourceNotFoundException(String nombreDelRecurso, String nombreDelCampo, long valorDelCampo) {
+	public ResourceNotFoundException(String nombreDelRecurso, String nombreDelCampo, Object valorDelCampo) {
 		super(String.format("%s no encontrada con : %s : '%s'",nombreDelRecurso,nombreDelCampo,valorDelCampo));
 		//%S indica que rebibe un parámetro
 		this.nombreDelRecurso = nombreDelRecurso;
@@ -39,12 +39,14 @@ public class ResourceNotFoundException extends RuntimeException{
 		this.nombreDelCampo = nombreDelCampo;
 	}
 
-	public long getValorDelCampo() {
+	public Object getValorDelCampo() {
 		return valorDelCampo;
 	}
 
-	public void setValorDelCampo(long valorDelCampo) {
+	public void setValorDelCampo(Object valorDelCampo) {
 		this.valorDelCampo = valorDelCampo;
 	}
+
+	
 
 }
