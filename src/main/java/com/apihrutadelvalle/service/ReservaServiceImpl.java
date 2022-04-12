@@ -39,7 +39,7 @@ public class ReservaServiceImpl implements ReservaService {
 		
 		ReservaDTO reservaDTO = new ReservaDTO();
 		reservaDTO.setId_reserva(reserva.getId_reserva());
-		reservaDTO.setId_usuario(reserva.getUsuario().getId_usuario());
+		reservaDTO.setUsername(reserva.getUsuario().getUsername());
 		reservaDTO.setId_habitacion(reserva.getHabitacion().getId_habitacion());
 		reservaDTO.setFecha_reserva(reserva.getFecha_reserva());
 		reservaDTO.setFecha_ingreso(reserva.getFecha_ingreso());
@@ -94,9 +94,9 @@ public class ReservaServiceImpl implements ReservaService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<ReservaDTO> mostrarReserva(){
+	public List<ReservaDetalleDTO> mostrarReserva(){
 		List<Reserva> res = reservaRepository.findAll();
-		return res.stream().map(reser -> mapToDTO(reser)).collect(Collectors.toList());
+		return res.stream().map(reser -> mapToDTODetalle(reser)).collect(Collectors.toList());
 	}
 	
 	
@@ -113,23 +113,26 @@ public class ReservaServiceImpl implements ReservaService {
 	
 	@Override
 	@Transactional
-	public ReservaDTO crearReserva(ReservaDTO resDTO, long id_user, long id_hab) {
+	public ReservaDTO crearReserva(ReservaDTO resDTO) {
 		
-		Habitacion habitacion = habitacionRepository.findById(id_hab)
-				.orElseThrow(() -> new ResourceNotFoundException("Habitacion", "id", id_hab));
+		Habitacion habitacion = habitacionRepository.findById(resDTO.getId_habitacion())
+				.orElseThrow(() -> new ResourceNotFoundException("Habitacion", "id", resDTO.getId_habitacion()));
 		
-		Usuario usuario = usuarioRepository.findById(id_user)
-				.orElseThrow(() -> new ResourceNotFoundException("Usuario", "id", id_user));
+		Usuario usuario = usuarioRepository.findByUsername(resDTO.getUsername())
+				.orElseThrow(() -> new ResourceNotFoundException("Usuario", "username", resDTO.getUsername()));
 		
 		resDTO.setFecha_reserva(new Date());
-		//recibe del json y guarda en l abd
+		//recibe del json y guarda en la bd
 		Reserva reservas = mapToEntity(resDTO, new Reserva());
 		reservas.setUsuario(usuario);
 		reservas.setHabitacion(habitacion);
 		
-		
 		//guardamos
 		Reserva nueva = reservaRepository.save(reservas);
+		
+		//actualizamos el estado de la habitación de libre a reservada
+		habitacion.setEstado("Reservada");
+		habitacionRepository.save(habitacion);
 		
 		//mostramos en  pantalla
 		return mapToDTO(nueva);

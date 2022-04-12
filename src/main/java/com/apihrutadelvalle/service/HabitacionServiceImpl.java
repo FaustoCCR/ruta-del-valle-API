@@ -166,6 +166,21 @@ public class HabitacionServiceImpl implements HabitacionService{
 		
 		return mapToDTODetalles(habitacion);
 	}
+
+
+
+	@Override
+	public List<HabitacionDetalleDTO> obtenerHabitacionesPorEstado(String estado) {
+		
+		List<Habitacion> habitaciones = habitacionRepository.findByEstado(estado)
+				.orElseThrow(() -> new ResourceNotFoundException("Habitaciones", "estado", estado));;
+		
+		return habitaciones.stream()
+				.map(habitacion -> mapToDTODetalles(habitacion)).collect(Collectors.toList());
+	}
+
+
+
 	
 
 	

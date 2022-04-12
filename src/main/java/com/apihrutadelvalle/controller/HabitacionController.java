@@ -81,6 +81,13 @@ public class HabitacionController {
 		return new ResponseEntity<>(habitacionDetalleDTO,HttpStatus.OK);
 	}
 	
+	@GetMapping("/seleccion")
+	public ResponseEntity<List<HabitacionDetalleDTO>> obtenerHabitacionesPorEstado(@RequestParam(value = "estado") String estado){
+		
+		List<HabitacionDetalleDTO> habitaciones = habitacionService.obtenerHabitacionesPorEstado(estado);
+		
+		return ResponseEntity.ok(habitaciones);
+	}
 	
 
 }

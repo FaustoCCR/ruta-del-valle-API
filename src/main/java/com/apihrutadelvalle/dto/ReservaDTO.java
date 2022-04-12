@@ -13,7 +13,7 @@ public class ReservaDTO implements Serializable {
 
 	private long id_reserva;
 	@NotNull
-	private long id_usuario;
+	private String Username;
 	@NotNull
 	private long  id_habitacion;
 	
@@ -42,12 +42,14 @@ public class ReservaDTO implements Serializable {
 	private Date fecha_salida;
 	
 	
-	public long getId_usuario() {
-		return id_usuario;
+	
+
+	public String getUsername() {
+		return Username;
 	}
 
-	public void setId_usuario(long id_usuario) {
-		this.id_usuario = id_usuario;
+	public void setUsername(String username) {
+		Username = username;
 	}
 
 	public long  getId_habitacion() {

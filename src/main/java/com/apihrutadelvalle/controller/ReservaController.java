@@ -33,7 +33,7 @@ public class ReservaController {
 	
 	//listar
 	@GetMapping
-	public ResponseEntity<List<ReservaDTO> > listarReserva(){
+	public ResponseEntity<List<ReservaDetalleDTO> > listarReserva(){
 		return ResponseEntity.ok(reservaService.mostrarReserva());
 	}
 	
@@ -48,9 +48,8 @@ public class ReservaController {
 	
 	//crear
 	@PostMapping
-	public ResponseEntity<ReservaDTO> crearReserva(@Valid @RequestBody ReservaDTO resDTO,
-			@RequestParam(value = "id_habitacion") long id_habitacion, @RequestParam(value = "id_usuario") long id_usuario){
-		ReservaDTO reservaDTO = reservaService.crearReserva(resDTO, id_usuario, id_habitacion);
+	public ResponseEntity<ReservaDTO> crearReserva(@Valid @RequestBody ReservaDTO resDTO){
+		ReservaDTO reservaDTO = reservaService.crearReserva(resDTO);
 		return new ResponseEntity <> (reservaDTO, HttpStatus.CREATED);
 	}
 	

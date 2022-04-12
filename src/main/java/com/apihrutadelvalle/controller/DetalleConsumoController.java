@@ -27,7 +27,6 @@ public class DetalleConsumoController {
 	private DetalleConsumoService detalleConsumoService;
 	
 	@GetMapping
-	
 	public ResponseEntity<List<DetalleConsumoDTO>> listarDetalleConsumo(){
 		
 		return ResponseEntity.ok(detalleConsumoService.listaDetallesConsumo());

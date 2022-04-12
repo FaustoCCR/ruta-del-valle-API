@@ -18,4 +18,6 @@ public interface HabitacionService {
 	public void eliminarHabitacion(long id_habitacion);
 	
 	public HabitacionDetalleDTO obtenerHabitacionPorNumero(int num);
+	
+	public List<HabitacionDetalleDTO> obtenerHabitacionesPorEstado(String estado);
 }

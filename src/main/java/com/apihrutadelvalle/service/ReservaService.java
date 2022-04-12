@@ -8,9 +8,9 @@ import com.apihrutadelvalle.dto.ReservaDetalleDTO;
 public interface ReservaService {
 	
 	
-	public List<ReservaDTO> mostrarReserva();
+	public List<ReservaDetalleDTO> mostrarReserva();
 	
-	public ReservaDTO crearReserva(ReservaDTO resDTO, long id_usuario,long id_habitacion);
+	public ReservaDTO crearReserva(ReservaDTO resDTO);
 	
 	public ReservaDTO obtenerReservaID(long id);
 	
