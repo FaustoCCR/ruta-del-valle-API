@@ -18,11 +18,9 @@ public class HabitacionDTO implements Serializable{
 
 	private long id_habitacion;
 	
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
-	private Planta planta;
+	private String nombrePlanta;
 	
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
-	private Tipo_Habitacion tipo_Habitacion;
+	private String nombreTipo;
 	
 	@Min(1)
 	private int num_habitacion;
@@ -43,22 +41,6 @@ public class HabitacionDTO implements Serializable{
 		this.id_habitacion = id_habitacion;
 	}
 	
-	public Planta getPlanta() {
-		return planta;
-	}
-
-	public void setPlanta(Planta planta) {
-		this.planta = planta;
-	}
-
-	public Tipo_Habitacion getTipo_Habitacion() {
-		return tipo_Habitacion;
-	}
-
-	public void setTipo_Habitacion(Tipo_Habitacion tipo_Habitacion) {
-		this.tipo_Habitacion = tipo_Habitacion;
-	}
-
 	public int getNum_habitacion() {
 		return num_habitacion;
 	}
@@ -87,8 +69,25 @@ public class HabitacionDTO implements Serializable{
 		super();
 	}
 
+	public String getNombrePlanta() {
+		return nombrePlanta;
+	}
 	
-	
-	
+
+	public void setNombrePlanta(String nombrePlanta) {
+		this.nombrePlanta = nombrePlanta;
+	}
+
+	public String getNombreTipo() {
+		return nombreTipo;
+	}
+
+	public void setNombreTipo(String nombreTipo) {
+		this.nombreTipo = nombreTipo;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	
 }

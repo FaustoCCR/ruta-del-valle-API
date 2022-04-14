@@ -54,7 +54,15 @@ public class HabitacionServiceImpl implements HabitacionService{
 	
 	private HabitacionDTO mapToDTOHabitacion(Habitacion habitacion) {
 		
-		return modelMapper.map(habitacion, HabitacionDTO.class);
+		//return modelMapper.map(habitacion, HabitacionDTO.class);
+		HabitacionDTO hdto = new HabitacionDTO();
+		hdto.setId_habitacion(habitacion.getId_habitacion());
+		hdto.setNombrePlanta(habitacion.getPlanta().getNombre());
+		hdto.setNombreTipo(habitacion.getTipo_Habitacion().getNombre());
+		hdto.setNum_habitacion(habitacion.getNum_habitacion());
+		hdto.setEstado(habitacion.getEstado());
+		hdto.setCosto_noche(habitacion.getCosto_noche());
+		return hdto;
 	}
 	
 	private Habitacion mapToEntity(HabitacionDTO haDto, Habitacion habitacion) {
@@ -95,15 +103,15 @@ public class HabitacionServiceImpl implements HabitacionService{
 
 	@Override
 	@Transactional
-	public HabitacionDTO crearHabitacion(long id_planta, long id_tipo, HabitacionDTO haDto) {
+	public HabitacionDTO crearHabitacion(HabitacionDTO haDto) {
 		
 		Habitacion habitacion = mapToEntity(haDto, new Habitacion());
 		
-		Planta planta = plantaRepository.findById(id_planta)
-				.orElseThrow(()-> new ResourceNotFoundException("Planta", "id", id_planta));
+		Planta planta = plantaRepository.findByNombre(haDto.getNombrePlanta())
+				.orElseThrow(()-> new ResourceNotFoundException("Planta", "nombre", haDto.getNombrePlanta()));
 		
-		Tipo_Habitacion tipo_Habitacion = tipoHabitacionRepository.findById(id_tipo)
-				.orElseThrow(() -> new ResourceNotFoundException("Tipo de habitacion", "id", id_tipo));
+		Tipo_Habitacion tipo_Habitacion = tipoHabitacionRepository.findByNombre(haDto.getNombreTipo())
+				.orElseThrow(() -> new ResourceNotFoundException("Tipo de habitacion", "nombre", haDto.getNombreTipo()));
 		
 		habitacion.setPlanta(planta);
 		habitacion.setTipo_Habitacion(tipo_Habitacion);
@@ -116,17 +124,17 @@ public class HabitacionServiceImpl implements HabitacionService{
 
 	@Override
 	@Transactional
-	public HabitacionDTO actualizarHabitacion(long id_planta, long id_tipo, long id_habitacion, HabitacionDTO haDto) {
+	public HabitacionDTO actualizarHabitacion(long id_habitacion, HabitacionDTO haDto) {
 		
 		/*Extraemos la habitación a modificar*/
 		Habitacion habitacion = habitacionRepository.findById(id_habitacion)
 				.orElseThrow(() -> new ResourceNotFoundException("Habitacion", "id", id_habitacion));
 		
-		Planta planta = plantaRepository.findById(id_planta)
-				.orElseThrow(()-> new ResourceNotFoundException("Planta", "id", id_planta));
+		Planta planta = plantaRepository.findByNombre(haDto.getNombrePlanta())
+				.orElseThrow(()-> new ResourceNotFoundException("Planta", "nombre", haDto.getNombrePlanta()));
 		
-		Tipo_Habitacion tipo_Habitacion = tipoHabitacionRepository.findById(id_tipo)
-				.orElseThrow(() -> new ResourceNotFoundException("Tipo de habitacion", "id", id_tipo));
+		Tipo_Habitacion tipo_Habitacion = tipoHabitacionRepository.findByNombre(haDto.getNombreTipo())
+				.orElseThrow(() -> new ResourceNotFoundException("Tipo de habitacion", "nombre", haDto.getNombreTipo()));
 		
 		
 		habitacion.setPlanta(planta);
