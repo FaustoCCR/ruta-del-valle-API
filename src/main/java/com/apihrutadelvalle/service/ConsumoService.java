@@ -10,7 +10,7 @@ public interface ConsumoService {
 	
 	public ConsumoDTO obtenerConsumoID (long id);
 	
-	public ConsumoDTO crearConsumo(ConsumoDTO consumoDTO, long id_reserva);
+	public ConsumoDTO crearConsumo(ConsumoDTO consumoDTO);
 	
 	public ConsumoDTO actualizarConsumo(ConsumoDTO consumoDTO, long id_consumo, long id_reserva);
 	

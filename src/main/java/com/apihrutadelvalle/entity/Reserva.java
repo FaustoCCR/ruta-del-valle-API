@@ -3,6 +3,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 import com.apihrutadelvalle.security.entity.Usuario;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "reserva",uniqueConstraints = {@UniqueConstraint(columnNames = {"id_reserva","id_usuario"})})
@@ -24,10 +25,12 @@ public class Reserva {
 	
 	@Column(name="fecha_ingreso",nullable = false)
 	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fecha_ingreso;
 
 	@Column(name="fecha_salida",nullable = false)
 	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fecha_salida;
 	
 	@Column(name="adultos",nullable = false)
@@ -36,7 +39,7 @@ public class Reserva {
 	@Column(name="ninos",nullable = false)
 	private int ninos;
 	
-	@Column(name="observaciones",nullable = false)
+	@Column(name="observaciones")
 	private String observaciones;
 	
 	@Column(name="costo_alojamiento",nullable = false)
@@ -48,6 +51,7 @@ public class Reserva {
 	//cuando el cliente desea ir
 	@Column(name="fecha_reserva")
 	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fecha_reserva;
 	
 	@PrePersist 

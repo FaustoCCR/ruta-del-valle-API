@@ -10,11 +10,13 @@ public interface ReservaService {
 	
 	public List<ReservaDetalleDTO> mostrarReserva();
 	
-	public ReservaDTO crearReserva(ReservaDTO resDTO);
+	public ReservaDTO crearReservabyUsername(ReservaDTO resDTO);
+	
+	public ReservaDTO crearReservabyDni(ReservaDTO dto);
 	
 	public ReservaDTO obtenerReservaID(long id);
 	
-	public ReservaDTO actualizarReserva(ReservaDTO resDTO,long id_reserva,long id_usuario,long id_habitacion);
+	public ReservaDTO actualizarReserva(long id_reserva,ReservaDTO resDTO);
 	
 	public void eliminarReseva(long id);
 	

@@ -32,9 +32,16 @@ public class HabitacionController {
 	
 	//listar
 	@GetMapping
-	public ResponseEntity<List<HabitacionDetalleDTO>> listarHabitaciones(){
+	public ResponseEntity<List<HabitacionDetalleDTO>> listarHabitaciones(@RequestParam(value = "estado",required = false) String estado){
 		
-		return ResponseEntity.ok(habitacionService.obtenerHabitaciones());
+		if (estado!=null) {
+			List<HabitacionDetalleDTO> habitaciones = habitacionService.obtenerHabitacionesPorEstado(estado);
+			
+			return ResponseEntity.ok(habitaciones);
+		}else {
+			return ResponseEntity.ok(habitacionService.obtenerHabitaciones());
+		}
+
 	}
 	
 	//ver por id
@@ -82,7 +89,7 @@ public class HabitacionController {
 	}
 	
 	@GetMapping("/seleccion")
-	public ResponseEntity<List<HabitacionDetalleDTO>> obtenerHabitacionesPorEstado(@RequestParam(value = "estado") String estado){
+	public ResponseEntity<List<HabitacionDetalleDTO>> obtenerHabitacionesPorEstado(@RequestParam(value = "estado",required = false) String estado){
 		
 		List<HabitacionDetalleDTO> habitaciones = habitacionService.obtenerHabitacionesPorEstado(estado);
 		

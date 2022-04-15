@@ -3,6 +3,8 @@ package com.apihrutadelvalle.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ReservaDetalleDTO implements Serializable{
 	
 	/**
@@ -11,6 +13,8 @@ public class ReservaDetalleDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private long id_reserva;
+	
+	private String dni;
 	
 	private String cliente;
 	
@@ -28,10 +32,13 @@ public class ReservaDetalleDTO implements Serializable{
 	
 	private int ninos;
 	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fecha_reserva;
 	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fecha_ingreso;
 	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fecha_salida;
 	
 	private double precio_noche;
@@ -47,6 +54,15 @@ public class ReservaDetalleDTO implements Serializable{
 
 	public void setId_reserva(long id_reserva) {
 		this.id_reserva = id_reserva;
+	}
+	
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
 
 	public String getCliente() {
