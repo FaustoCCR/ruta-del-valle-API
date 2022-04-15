@@ -81,5 +81,12 @@ public class ReservaController {
 		return ResponseEntity.ok(reserva);
 	}
 	
+	@GetMapping("/usuario/{username}")
+	public ResponseEntity<List<ReservaDetalleDTO>> mostrarDetallesporHabitacion(@PathVariable String username){
+		
+		List<ReservaDetalleDTO> reserva = reservaService.mostrarReservaporUsername(username);
+		return ResponseEntity.ok(reserva);
+	}
+	
 	
 }

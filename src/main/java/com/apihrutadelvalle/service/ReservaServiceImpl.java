@@ -257,6 +257,18 @@ public class ReservaServiceImpl implements ReservaService {
 		
 	}
 
+	@Override
+	public List<ReservaDetalleDTO> mostrarReservaporUsername(String username) {
+		
+		Usuario usuario = usuarioRepository.findByUsername(username)
+				.orElseThrow(() -> new ResourceNotFoundException("Usuario", "username", username));
+		
+		List<Reserva> reservasOfUser = reservaRepository.findByUsuario(usuario)
+				.orElseThrow(() -> new ResourceNotFoundException("Reserva", "username", username));
+		
+		return reservasOfUser.stream().map(reserva -> mapToDTODetalle(reserva)).collect(Collectors.toList());
+	}
+
 
 	
 	

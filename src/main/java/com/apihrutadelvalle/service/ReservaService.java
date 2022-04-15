@@ -22,4 +22,6 @@ public interface ReservaService {
 	
 	public ReservaDetalleDTO mostrarDetalleReservaporHabitacion(int num_habitacion);
 	
+	public List<ReservaDetalleDTO> mostrarReservaporUsername(String username);
+	
 }
