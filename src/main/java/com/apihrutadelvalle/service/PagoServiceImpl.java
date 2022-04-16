@@ -119,9 +119,11 @@ public class PagoServiceImpl implements PagoService{
 		
 		double total = subtotal + (subtotal * IVA);
 		
+		double total_redondeado = Math.round(total*100.00)/100.0;
+		
 		pago.setReserva(reserva);
 		pago.setSubtotal(subtotal);
-		pago.setTotal_pago(total);
+		pago.setTotal_pago(total_redondeado);
 		
 		
 		return mapToPagoDTO(pagoRepository.save(pago));
