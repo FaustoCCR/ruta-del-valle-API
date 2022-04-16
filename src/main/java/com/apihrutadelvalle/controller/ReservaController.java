@@ -45,7 +45,7 @@ public class ReservaController {
 	}
 	
 	
-	//crear
+	//crear por username(movil)
 	@PostMapping
 	public ResponseEntity<ReservaDTO> crearReserva(@Valid @RequestBody ReservaDTO resDTO){
 		ReservaDTO reservaDTO = reservaService.crearReservabyUsername(resDTO);

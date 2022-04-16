@@ -5,9 +5,6 @@ import java.io.Serializable;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
-import com.apihrutadelvalle.entity.Planta;
-import com.apihrutadelvalle.entity.Tipo_Habitacion;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 public class HabitacionDTO implements Serializable{
 	
