@@ -49,6 +49,14 @@ public class UserController {
 		return ResponseEntity.ok(userInformation);
 	}
 	
+	@GetMapping("/dni/{dni}")
+	public ResponseEntity<UserInformation> obtenerUsuarioByDni(@PathVariable String dni){
+		
+		UserInformation userInformation = userInformationService.obtenerUsuarioByDni(dni);
+		
+		return ResponseEntity.ok(userInformation);
+	}
+	
 	@PutMapping("/{id_user}")
 	public ResponseEntity<?> acualizarUsuario(@PathVariable long id_user,@Valid @RequestBody UserInformation userInformation,BindingResult bindingResult){
 		

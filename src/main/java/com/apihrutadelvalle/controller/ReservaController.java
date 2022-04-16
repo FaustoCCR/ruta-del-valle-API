@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apihrutadelvalle.dto.ReservaDTO;
@@ -49,16 +48,22 @@ public class ReservaController {
 	//crear
 	@PostMapping
 	public ResponseEntity<ReservaDTO> crearReserva(@Valid @RequestBody ReservaDTO resDTO){
-		ReservaDTO reservaDTO = reservaService.crearReserva(resDTO);
-		return new ResponseEntity <> (reservaDTO, HttpStatus.CREATED);
+		ReservaDTO reservaDTO = reservaService.crearReservabyUsername(resDTO);
+		return new ResponseEntity<>(reservaDTO, HttpStatus.CREATED);
+	}
+	
+	//crear por DNI
+	@PostMapping("/byDni")
+	public ResponseEntity<ReservaDTO> crearReservaByDni(@Valid @RequestBody ReservaDTO reservaDTO){
+		
+		return new ResponseEntity<>(reservaService.crearReservabyDni(reservaDTO),HttpStatus.CREATED);
 	}
 	
 	
 	//editar
 	@PutMapping("/edit/{id_reserva}")
-	public ResponseEntity<ReservaDTO> actualizarReserva(@Valid @RequestBody ReservaDTO resDTO,@PathVariable long id_reserva,
-			@RequestParam(value = "id_habitacion") long id_habitacion, @RequestParam(value = "id_usuario") long id_usuario){
-		ReservaDTO reservaDTO = reservaService.actualizarReserva(resDTO,  id_reserva,id_habitacion,id_usuario );
+	public ResponseEntity<ReservaDTO> actualizarReserva(@Valid @RequestBody ReservaDTO resDTO,@PathVariable long id_reserva){
+		ReservaDTO reservaDTO = reservaService.actualizarReserva(id_reserva,resDTO);
 		return new ResponseEntity <> (reservaDTO, HttpStatus.OK);
 	}
 
@@ -70,9 +75,16 @@ public class ReservaController {
 	}
 	
 	@GetMapping("/detalle/{num}")
-	public ResponseEntity<ReservaDetalleDTO> mostrarDetalles(@PathVariable int num){
+	public ResponseEntity<ReservaDetalleDTO> mostrarDetallesporHabitacion(@PathVariable int num){
 		
 		ReservaDetalleDTO reserva = reservaService.mostrarDetalleReservaporHabitacion(num);
+		return ResponseEntity.ok(reserva);
+	}
+	
+	@GetMapping("/usuario/{username}")
+	public ResponseEntity<List<ReservaDetalleDTO>> mostrarDetallesporHabitacion(@PathVariable String username){
+		
+		List<ReservaDetalleDTO> reserva = reservaService.mostrarReservaporUsername(username);
 		return ResponseEntity.ok(reserva);
 	}
 	

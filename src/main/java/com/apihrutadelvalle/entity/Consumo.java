@@ -20,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "consumo")
@@ -34,6 +35,7 @@ public class Consumo {
 	private Reserva reserva;
 	
 	@Column(name="fecha")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 	

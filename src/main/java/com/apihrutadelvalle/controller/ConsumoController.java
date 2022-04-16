@@ -42,8 +42,8 @@ public class ConsumoController {
 	
 	//Metodo para crear
 	@PostMapping()
-	public ResponseEntity<ConsumoDTO> crearConsumo(@Valid @RequestBody ConsumoDTO consumoDTO, @RequestParam(value = "id_reserva") long id_reserva){
-		ConsumoDTO consuDTO = consumoService.crearConsumo(consumoDTO, id_reserva);
+	public ResponseEntity<ConsumoDTO> crearConsumo(@Valid @RequestBody ConsumoDTO consumoDTO){
+		ConsumoDTO consuDTO = consumoService.crearConsumo(consumoDTO);
 		return new ResponseEntity <> (consuDTO, HttpStatus.CREATED);
 	}
 	

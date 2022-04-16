@@ -104,7 +104,7 @@ public class UserInformationImpl implements UserInformationService{
 		/*Extraemos el usuario a eliminar*/
 		
 		Usuario user =  usuarioRepository.findById(id_user)
-				.orElseThrow(()-> new ResourceNotFoundException("Usuario", "", id_user));
+				.orElseThrow(()-> new ResourceNotFoundException("Usuario", "id", id_user));
 		
 		usuarioRepository.delete(user);
 	}
@@ -112,7 +112,8 @@ public class UserInformationImpl implements UserInformationService{
 	@Override
 	@Transactional
 	public UserInformation findByUsername(String username) {
-		Usuario usuario = usuarioRepository.findByUsername(username).get();
+		Usuario usuario = usuarioRepository.findByUsername(username)
+				.orElseThrow(()-> new ResourceNotFoundException("Usuario", "username", username));;
 		
 		return mapToDTOInformation(usuario);
 	}
@@ -133,6 +134,16 @@ public class UserInformationImpl implements UserInformationService{
 	public boolean existsByDni(String dni) {
 		
 		return usuarioRepository.existsByDni(dni);
+	}
+
+	@Override
+	@Transactional
+	public UserInformation obtenerUsuarioByDni(String dni) {
+		
+		Usuario usuario = usuarioRepository.findByDni(dni)
+				.orElseThrow(()-> new ResourceNotFoundException("Usuario", "dni", dni));
+		
+		return mapToDTOInformation(usuario);
 	}
 
 }
