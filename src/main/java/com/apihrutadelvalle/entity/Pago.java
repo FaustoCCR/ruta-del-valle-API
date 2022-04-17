@@ -1,6 +1,8 @@
 package com.apihrutadelvalle.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,6 +42,7 @@ public class Pago {
 	@Column(name="total_pago",nullable = false)
 	double total_pago;
 	
+
 	
 	@PrePersist 
 	public void prePersist() {
@@ -97,5 +100,13 @@ public class Pago {
 		this.total_pago = total_pago;
 	}
 	
+	
+	public List<Reserva> getinfoReserva(){
+		List<Reserva> reservas = new ArrayList<>();
+		
+		reservas.add(reserva);
+		return reservas;
+		
+	}
 
 }

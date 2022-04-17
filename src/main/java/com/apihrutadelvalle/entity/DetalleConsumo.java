@@ -70,6 +70,18 @@ public class DetalleConsumo {
 	}
 	
 	
+	/*
+	 * Jasper*/
+	
+	public String getNombre_producto() {
+		return producto.getNombre();
+	}
+	
+	public double getPrecio_venta() {
+		 return producto.getPrecio_venta();
+	}
+	
+	
 	
 	
 

@@ -1,11 +1,24 @@
 package com.apihrutadelvalle.service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 
 import com.apihrutadelvalle.dto.PagoDetalleDTO;
 import com.apihrutadelvalle.dto.PagoDto;
@@ -14,8 +27,17 @@ import com.apihrutadelvalle.entity.Pago;
 import com.apihrutadelvalle.entity.Reserva;
 import com.apihrutadelvalle.exception.ResourceNotFoundException;
 import com.apihrutadelvalle.repository.ConsumoRepository;
+import com.apihrutadelvalle.repository.DetalleConsumoRepository;
 import com.apihrutadelvalle.repository.PagoRepository;
 import com.apihrutadelvalle.repository.ReservaRepository;
+
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 @Service
 public class PagoServiceImpl implements PagoService{
@@ -28,6 +50,9 @@ public class PagoServiceImpl implements PagoService{
 	
 	@Autowired
 	private ReservaRepository reservaRepository;
+	
+	@Autowired
+	private DetalleConsumoRepository detalleConsumoRepository;
 	
 	
 	private PagoDto mapToPagoDTO(Pago pago) {
@@ -137,6 +162,91 @@ public class PagoServiceImpl implements PagoService{
 		List<PagoDetalleDTO> pagos = pagoRepository.findAll().stream()
 				.map(pago-> mapToPagoDetalleDTO(pago)).collect(Collectors.toList());
 		return pagos;
+	}
+
+	@Override
+	public ResponseEntity<Resource> exportPDF(long id_reserva) {
+		
+		/*Reserva reserva = reservaRepository.findById(id_reserva)
+				.orElseThrow(() -> new ResourceNotFoundException("Reserva", "id", id_reserva));*/
+		
+		Optional<Pago> optpago = pagoRepository.findByIdReserva(id_reserva);
+
+		
+		if (optpago.isPresent()) {
+			
+			Pago pago = optpago.get();
+			
+			Optional<Consumo> optconsumo = consumoRepository.findByIdReserva(id_reserva);
+			
+			double totalconsumo = detalleConsumoRepository.totalByReserva(id_reserva).orElse(0.0);
+			
+			
+			
+			
+			try {
+				
+				final File file =  ResourceUtils.getFile("classpath:reports/Pago.jasper");
+				final File imgLogo = ResourceUtils.getFile("classpath:images/hotel_icon.png");
+				final JasperReport report = (JasperReport) JRLoader.loadObject(file);
+				
+				//JRBeanArrayDataSource dsconsumo = new JRBeanArrayDataSource(consumo.getListaDetalle().toArray());
+				JRBeanArrayDataSource dsalojamiento = new JRBeanArrayDataSource(pago.getinfoReserva().toArray());
+				
+				
+				
+				final HashMap<String, Object> parameters = new HashMap<>();
+				//parameters.put("p_idreserva",pago.getReserva().getId_reserva());
+				parameters.put("p_logo", new FileInputStream(imgLogo));
+				parameters.put("p_cliente", pago.getReserva().getUsuario().getNombre());
+				
+				/*Tables*/
+				
+				if (optconsumo.isPresent()) {
+					Consumo consumo = optconsumo.get();
+					JRBeanArrayDataSource dsconsumo = new JRBeanArrayDataSource(consumo.getListaDetalle().toArray());
+					parameters.put("dsconsumo", dsconsumo);
+				}
+				//parameters.put("dsconsumo", dsconsumo);
+				parameters.put("dsalojamiento",dsalojamiento);
+				
+				/*Summary*/
+				parameters.put("p_totalconsumo", totalconsumo);
+				parameters.put("p_alojamiento", pago.getReserva().getCosto_alojamiento());
+				parameters.put("p_subtotal", pago.getSubtotal());
+				parameters.put("p_total", pago.getTotal_pago());
+				
+				
+				
+				
+				JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
+				byte[] reporte = JasperExportManager.exportReportToPdf(jasperPrint);
+				String sdf = (new SimpleDateFormat("yyyy-MM-dd")).format(new Date());
+				StringBuilder stringBuilder = new StringBuilder().append("InvoicePDF:");
+				
+				ContentDisposition contentDisposition = ContentDisposition.builder("attachment")
+						.filename(stringBuilder.append(pago.getReserva().getId_reserva())
+								.append("generateDate:").append(sdf).append(".pdf").toString()).build();
+				
+				
+				HttpHeaders headers = new HttpHeaders();
+				headers.setContentDisposition(contentDisposition);
+				
+				return ResponseEntity.ok().contentLength((long) reporte.length)
+						.contentType(MediaType.APPLICATION_PDF)
+						.headers(headers).body(new ByteArrayResource(reporte));
+				
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+
+		
+		
+		return null;
 	}
 
 }

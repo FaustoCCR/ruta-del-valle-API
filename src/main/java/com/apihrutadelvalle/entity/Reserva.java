@@ -1,5 +1,7 @@
 package com.apihrutadelvalle.entity;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 import javax.persistence.*;
 
 import com.apihrutadelvalle.security.entity.Usuario;
@@ -148,6 +150,39 @@ public class Reserva {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+	
+	
+	/*JASPER REPORT*/
+	
+	public int getNum_habitacion() {
+		
+		return habitacion.getNum_habitacion();
+	}
+	
+	public String getTipo_habitacion() {
+		return habitacion.getTipo_Habitacion().getNombre();
+	}
+	
+	public String getPlanta() {
+		return habitacion.getPlanta().getNombre();
+	}
+	
+	public double getCosto_noche(){
+		
+		return habitacion.getCosto_noche();
+	}
+	
+	public long getEstancia() {
+		
+		long diff = fecha_salida.getTime() - fecha_ingreso.getTime();
+		
+		TimeUnit time = TimeUnit.DAYS;
+		
+		long difference = time.convert(diff,TimeUnit.MILLISECONDS);
+		
+		
+		return difference;
 	}
 	
 	
