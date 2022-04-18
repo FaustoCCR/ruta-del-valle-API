@@ -1,8 +1,11 @@
 package com.apihrutadelvalle.entity;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 import javax.persistence.*;
 
 import com.apihrutadelvalle.security.entity.Usuario;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "reserva",uniqueConstraints = {@UniqueConstraint(columnNames = {"id_reserva","id_usuario"})})
@@ -24,10 +27,12 @@ public class Reserva {
 	
 	@Column(name="fecha_ingreso",nullable = false)
 	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fecha_ingreso;
 
 	@Column(name="fecha_salida",nullable = false)
 	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fecha_salida;
 	
 	@Column(name="adultos",nullable = false)
@@ -36,7 +41,7 @@ public class Reserva {
 	@Column(name="ninos",nullable = false)
 	private int ninos;
 	
-	@Column(name="observaciones",nullable = false)
+	@Column(name="observaciones")
 	private String observaciones;
 	
 	@Column(name="costo_alojamiento",nullable = false)
@@ -48,6 +53,7 @@ public class Reserva {
 	//cuando el cliente desea ir
 	@Column(name="fecha_reserva")
 	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fecha_reserva;
 	
 	@PrePersist 
@@ -144,6 +150,39 @@ public class Reserva {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+	
+	
+	/*JASPER REPORT*/
+	
+	public int getNum_habitacion() {
+		
+		return habitacion.getNum_habitacion();
+	}
+	
+	public String getTipo_habitacion() {
+		return habitacion.getTipo_Habitacion().getNombre();
+	}
+	
+	public String getPlanta() {
+		return habitacion.getPlanta().getNombre();
+	}
+	
+	public double getCosto_noche(){
+		
+		return habitacion.getCosto_noche();
+	}
+	
+	public long getEstancia() {
+		
+		long diff = fecha_salida.getTime() - fecha_ingreso.getTime();
+		
+		TimeUnit time = TimeUnit.DAYS;
+		
+		long difference = time.convert(diff,TimeUnit.MILLISECONDS);
+		
+		
+		return difference;
 	}
 	
 	

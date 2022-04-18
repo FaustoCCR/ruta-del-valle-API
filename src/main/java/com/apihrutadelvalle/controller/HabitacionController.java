@@ -32,9 +32,16 @@ public class HabitacionController {
 	
 	//listar
 	@GetMapping
-	public ResponseEntity<List<HabitacionDetalleDTO>> listarHabitaciones(){
+	public ResponseEntity<List<HabitacionDetalleDTO>> listarHabitaciones(@RequestParam(value = "estado",required = false) String estado){
 		
-		return ResponseEntity.ok(habitacionService.obtenerHabitaciones());
+		if (estado!=null) {
+			List<HabitacionDetalleDTO> habitaciones = habitacionService.obtenerHabitacionesPorEstado(estado);
+			
+			return ResponseEntity.ok(habitaciones);
+		}else {
+			return ResponseEntity.ok(habitacionService.obtenerHabitaciones());
+		}
+
 	}
 	
 	//ver por id
@@ -46,22 +53,20 @@ public class HabitacionController {
 	
 	//crear 
 	@PostMapping()
-	public ResponseEntity<HabitacionDTO> guardarHabitacion(@RequestParam(value = "id_planta") long id_planta,
-			@RequestParam(value = "id_tipo") long id_tipo,
+	public ResponseEntity<HabitacionDTO> guardarHabitacion(
 			@Valid @RequestBody HabitacionDTO hDto){
 		
-		HabitacionDTO habitacionDTO = habitacionService.crearHabitacion(id_planta, id_tipo, hDto);
+		HabitacionDTO habitacionDTO = habitacionService.crearHabitacion(hDto);
 		
 		return new ResponseEntity<>(habitacionDTO,HttpStatus.CREATED);
 		
 	}
 	//editar
 	@PutMapping("/{id_habitacion}")
-	public ResponseEntity<HabitacionDTO> actualizarHabitacion(@PathVariable long id_habitacion,@RequestParam(value = "id_planta") long id_planta,
-			@RequestParam(value = "id_tipo") long id_tipo,
+	public ResponseEntity<HabitacionDTO> actualizarHabitacion(@PathVariable long id_habitacion,
 			@Valid @RequestBody HabitacionDTO hDto){
 		
-		HabitacionDTO habitacionDTO = habitacionService.actualizarHabitacion(id_planta, id_tipo, id_habitacion, hDto);
+		HabitacionDTO habitacionDTO = habitacionService.actualizarHabitacion(id_habitacion, hDto);
 		
 		return new ResponseEntity<>(habitacionDTO,HttpStatus.OK);
 		
@@ -82,7 +87,7 @@ public class HabitacionController {
 	}
 	
 	@GetMapping("/seleccion")
-	public ResponseEntity<List<HabitacionDetalleDTO>> obtenerHabitacionesPorEstado(@RequestParam(value = "estado") String estado){
+	public ResponseEntity<List<HabitacionDetalleDTO>> obtenerHabitacionesPorEstado(@RequestParam(value = "estado",required = false) String estado){
 		
 		List<HabitacionDetalleDTO> habitaciones = habitacionService.obtenerHabitacionesPorEstado(estado);
 		

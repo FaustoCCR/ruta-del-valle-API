@@ -7,17 +7,18 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ReservaDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;/*identificar unico por clase*/
 
 	private long id_reserva;
 	@NotNull
-	private String Username;
+	private String cliente;
 	@NotNull
 	private long  id_habitacion;
 	
-	@NotEmpty
 	@Size(min = 0,max = 100, message = "La observacion debe tener de 0 a 100 caracteres")
 	private String observaciones;
 	
@@ -35,21 +36,23 @@ public class ReservaDTO implements Serializable {
 	private double costo_alojamiento;
 	
 	@NotNull
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fecha_ingreso;
-
+	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fecha_reserva;
+	
 	@NotNull
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fecha_salida;
 	
-	
-	
 
-	public String getUsername() {
-		return Username;
+	public String getCliente() {
+		return cliente;
 	}
 
-	public void setUsername(String username) {
-		Username = username;
+	public void setCliente(String cliente) {
+		this.cliente = cliente;
 	}
 
 	public long  getId_habitacion() {

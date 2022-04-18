@@ -1,11 +1,10 @@
 package com.apihrutadelvalle.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
+//import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +20,8 @@ import com.apihrutadelvalle.repository.ReservaRepository;
 @Service
 public class ConsumoServiceImpl implements ConsumoService{
 	
-	@Autowired
-	private ModelMapper modelMapper;
+	/*@Autowired
+	private ModelMapper modelMapper;*/
 	
 	@Autowired
 	private ConsumoRepository consumoRepository;
@@ -65,7 +64,7 @@ public class ConsumoServiceImpl implements ConsumoService{
 		return consumoDTO;
 	}
 	
-	private ConsumoDTO mapToDTO(Consumo consumo) {
+	/*private ConsumoDTO mapToDTO(Consumo consumo) {
 		return modelMapper.map(consumo, ConsumoDTO.class);
 	}
 	
@@ -73,7 +72,7 @@ public class ConsumoServiceImpl implements ConsumoService{
 	private Consumo mapToEntity(ConsumoDTO consumoDTO, Consumo consumo) {
 		Consumo con = modelMapper.map(consumoDTO, Consumo.class);
 		return con;
-	}
+	}*/
 	
 	/*-------- METODOS DE CONSULTA -------*/
 	@Override
@@ -92,8 +91,8 @@ public class ConsumoServiceImpl implements ConsumoService{
 	
 	@Override
 	@Transactional
-	public ConsumoDTO crearConsumo(ConsumoDTO consumoDTO, long id_reserva) {
-		Reserva reserva=reservaRepository.findById(id_reserva).orElseThrow(() -> new ResourceNotFoundException("Reserva", "id", id_reserva));
+	public ConsumoDTO crearConsumo(ConsumoDTO consumoDTO) {
+		Reserva reserva=reservaRepository.findById(consumoDTO.getId_reserva()).orElseThrow(() -> new ResourceNotFoundException("Reserva", "id", consumoDTO.getId_reserva()));
 		
 		//recibe lo que ingresamos al json para guardarlo en la BD
 		Consumo consumos = new Consumo();

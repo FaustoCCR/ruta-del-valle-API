@@ -9,6 +9,8 @@ public interface UserInformationService {
 	
 	public UserInformation obtenerUsuarioId(long id_user);
 	
+	public UserInformation obtenerUsuarioByDni(String dni);
+	
 	public UserInformation actualizarUsuario(long id_user,UserInformation usuario);
 	
 	public void eliminarUsuario(long id_user);
