@@ -178,6 +178,7 @@ public class HabitacionServiceImpl implements HabitacionService{
 
 
 	@Override
+	@Transactional
 	public List<HabitacionDetalleDTO> obtenerHabitacionesPorEstado(String estado) {
 		
 		List<Habitacion> habitaciones = habitacionRepository.findByEstado(estado)
