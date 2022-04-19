@@ -57,8 +57,8 @@ public class HabitacionServiceImpl implements HabitacionService{
 		//return modelMapper.map(habitacion, HabitacionDTO.class);
 		HabitacionDTO hdto = new HabitacionDTO();
 		hdto.setId_habitacion(habitacion.getId_habitacion());
-		hdto.setNombrePlanta(habitacion.getPlanta().getNombre());
-		hdto.setNombreTipo(habitacion.getTipo_Habitacion().getNombre());
+		hdto.setPlanta(habitacion.getPlanta().getNombre());
+		hdto.setTipo_habitacion(habitacion.getTipo_Habitacion().getNombre());
 		hdto.setNum_habitacion(habitacion.getNum_habitacion());
 		hdto.setEstado(habitacion.getEstado());
 		hdto.setCosto_noche(habitacion.getCosto_noche());
@@ -107,11 +107,11 @@ public class HabitacionServiceImpl implements HabitacionService{
 		
 		Habitacion habitacion = mapToEntity(haDto, new Habitacion());
 		
-		Planta planta = plantaRepository.findByNombre(haDto.getNombrePlanta())
-				.orElseThrow(()-> new ResourceNotFoundException("Planta", "nombre", haDto.getNombrePlanta()));
+		Planta planta = plantaRepository.findByNombre(haDto.getPlanta())
+				.orElseThrow(()-> new ResourceNotFoundException("Planta", "nombre", haDto.getPlanta()));
 		
-		Tipo_Habitacion tipo_Habitacion = tipoHabitacionRepository.findByNombre(haDto.getNombreTipo())
-				.orElseThrow(() -> new ResourceNotFoundException("Tipo de habitacion", "nombre", haDto.getNombreTipo()));
+		Tipo_Habitacion tipo_Habitacion = tipoHabitacionRepository.findByNombre(haDto.getTipo_habitacion())
+				.orElseThrow(() -> new ResourceNotFoundException("Tipo de habitacion", "nombre", haDto.getTipo_habitacion()));
 		
 		habitacion.setPlanta(planta);
 		habitacion.setTipo_Habitacion(tipo_Habitacion);
@@ -130,11 +130,11 @@ public class HabitacionServiceImpl implements HabitacionService{
 		Habitacion habitacion = habitacionRepository.findById(id_habitacion)
 				.orElseThrow(() -> new ResourceNotFoundException("Habitacion", "id", id_habitacion));
 		
-		Planta planta = plantaRepository.findByNombre(haDto.getNombrePlanta())
-				.orElseThrow(()-> new ResourceNotFoundException("Planta", "nombre", haDto.getNombrePlanta()));
+		Planta planta = plantaRepository.findByNombre(haDto.getPlanta())
+				.orElseThrow(()-> new ResourceNotFoundException("Planta", "nombre", haDto.getPlanta()));
 		
-		Tipo_Habitacion tipo_Habitacion = tipoHabitacionRepository.findByNombre(haDto.getNombreTipo())
-				.orElseThrow(() -> new ResourceNotFoundException("Tipo de habitacion", "nombre", haDto.getNombreTipo()));
+		Tipo_Habitacion tipo_Habitacion = tipoHabitacionRepository.findByNombre(haDto.getTipo_habitacion())
+				.orElseThrow(() -> new ResourceNotFoundException("Tipo de habitacion", "nombre", haDto.getTipo_habitacion()));
 		
 		
 		habitacion.setPlanta(planta);

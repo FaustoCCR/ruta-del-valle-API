@@ -15,9 +15,9 @@ public class HabitacionDTO implements Serializable{
 
 	private long id_habitacion;
 	
-	private String nombrePlanta;
+	private String planta;
 	
-	private String nombreTipo;
+	private String tipo_habitacion;
 	
 	@Min(1)
 	private int num_habitacion;
@@ -65,22 +65,22 @@ public class HabitacionDTO implements Serializable{
 	public HabitacionDTO() {
 		super();
 	}
-
-	public String getNombrePlanta() {
-		return nombrePlanta;
-	}
 	
 
-	public void setNombrePlanta(String nombrePlanta) {
-		this.nombrePlanta = nombrePlanta;
+	public String getPlanta() {
+		return planta;
 	}
 
-	public String getNombreTipo() {
-		return nombreTipo;
+	public void setPlanta(String planta) {
+		this.planta = planta;
 	}
 
-	public void setNombreTipo(String nombreTipo) {
-		this.nombreTipo = nombreTipo;
+	public String getTipo_habitacion() {
+		return tipo_habitacion;
+	}
+
+	public void setTipo_habitacion(String tipo_habitacion) {
+		this.tipo_habitacion = tipo_habitacion;
 	}
 
 	public static long getSerialversionuid() {
