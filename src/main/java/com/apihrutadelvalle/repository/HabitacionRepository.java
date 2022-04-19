@@ -14,6 +14,8 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Long>{
 	Optional<Habitacion> findByNumHabitacion(int num_habitacion);
 	
 	Optional<List<Habitacion>> findByEstado(String estado);
-
+	
+	@Query(value = "SELECT COUNT(h.estado) from habitaciones h GROUP by h.estado", nativeQuery = true)
+	Optional<Integer[]> getCountofRoomState();
 
 }
