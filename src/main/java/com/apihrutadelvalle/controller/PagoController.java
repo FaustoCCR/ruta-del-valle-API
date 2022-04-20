@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apihrutadelvalle.dto.PagoDetalleDTO;
-import com.apihrutadelvalle.dto.PagoDto;
+import com.apihrutadelvalle.dto.PagoDTO;
 import com.apihrutadelvalle.service.PagoService;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -29,7 +29,7 @@ public class PagoController {
 	private PagoService pagoService;
 	
 	@PostMapping
-	public ResponseEntity<PagoDto> realizarPago(@Valid @RequestBody PagoDto pagoDto){
+	public ResponseEntity<PagoDTO> realizarPago(@Valid @RequestBody PagoDTO pagoDto){
 		
 		return new ResponseEntity<>(pagoService.crearPago(pagoDto),HttpStatus.CREATED);
 	}

@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class PagoDto implements Serializable{
+public class PagoDTO implements Serializable{
 	
 	/**
 	 * 
