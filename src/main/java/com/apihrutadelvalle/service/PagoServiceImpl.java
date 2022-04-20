@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 
 import com.apihrutadelvalle.dto.PagoDetalleDTO;
-import com.apihrutadelvalle.dto.PagoDTO;
+import com.apihrutadelvalle.dto.PagoDto;
 import com.apihrutadelvalle.entity.Consumo;
 import com.apihrutadelvalle.entity.Pago;
 import com.apihrutadelvalle.entity.Reserva;
@@ -55,9 +55,9 @@ public class PagoServiceImpl implements PagoService{
 	private DetalleConsumoRepository detalleConsumoRepository;
 	
 	
-	private PagoDTO mapToPagoDTO(Pago pago) {
+	private PagoDto mapToPagoDTO(Pago pago) {
 		
-		PagoDTO dto = new PagoDTO();
+		PagoDto dto = new PagoDto();
 		dto.setId_pago(pago.getId_pago());
 		dto.setId_reserva(pago.getReserva().getId_reserva());
 		dto.setFecha_emision(pago.getFecha_emision());
@@ -113,7 +113,7 @@ public class PagoServiceImpl implements PagoService{
 
 	@Override
 	@Transactional
-	public PagoDTO crearPago(PagoDTO pagoDto) {
+	public PagoDto crearPago(PagoDto pagoDto) {
 		
 		
 		Reserva reserva = reservaRepository.findById(pagoDto.getId_reserva())
